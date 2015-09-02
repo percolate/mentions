@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+
+    <!-- Divider -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/orange" />
+
+    <include layout="@layout/mentions_list_view" />
+
+    <!-- Comment Container -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:orientation="horizontal">
+
+        <!-- Comment Field -->
+
+        <EditText
+            android:id="@+id/comment_field"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1.0"
+            android:background="@color/transparent"
+            android:paddingBottom="15dp"
+            android:maxLines="4"
+            android:lineSpacingMultiplier="1.2"
+            android:hint="@string/try_at_mentions"
+            android:textSize="17sp"
+            tools:ignore="RtlHardcoded" />
+
+        <!-- Divider -->
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/orange" />
+
+        <!-- Send Comment Button -->
+
+        <Button
+            android:id="@+id/send_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:background="@color/transparent"
+            android:textSize="14sp"
+            android:text="@string/send_button_label"
+            android:textColor="@color/orange_faded" />
+
+    </LinearLayout>
+
+</LinearLayout>

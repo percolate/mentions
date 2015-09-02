@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="orange">#f16421</color>
+    <color name="orange_faded">#80f16421</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="grey_light">#cccccc</color>
+</resources>
