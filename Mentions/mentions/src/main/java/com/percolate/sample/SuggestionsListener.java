@@ -1,4 +1,4 @@
-package com.percolate.mentions;
+package com.percolate.sample;
 
 /**
  * Listener which informs you whether to show or hide a suggestions drop down.

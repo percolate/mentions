@@ -1,6 +1,6 @@
-package com.percolate.percolatementions.models;
+package com.percolate.mentions.sample.models;
 
-import com.percolate.mentions.Mentionable;
+import com.percolate.sample.Mentionable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

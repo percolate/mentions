@@ -1,4 +1,4 @@
-package com.percolate.percolatementions.adapters;
+package com.percolate.mentions.sample.adapters;
 
 import android.content.Context;
 import android.text.Spannable;
@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.percolate.caffeine.ViewUtils;
-import com.percolate.percolatementions.R;
-import com.percolate.percolatementions.models.User;
+import com.percolate.mentions.sample.models.User;
+import com.percolate.sample.sample.R;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringUtils;

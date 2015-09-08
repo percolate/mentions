@@ -1,4 +1,4 @@
-package com.percolate.percolatementions.activities;
+package com.percolate.mentions.sample.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +11,16 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.percolate.caffeine.ViewUtils;
-import com.percolate.mentions.Mentions;
-import com.percolate.mentions.QueryListener;
-import com.percolate.mentions.SuggestionsListener;
-import com.percolate.percolatementions.R;
-import com.percolate.percolatementions.adapters.CommentsAdapter;
-import com.percolate.percolatementions.adapters.UsersArrayAdapter;
-import com.percolate.percolatementions.models.Comment;
-import com.percolate.percolatementions.models.Mention;
-import com.percolate.percolatementions.models.User;
-import com.percolate.percolatementions.utils.MentionsLoaderUtils;
+import com.percolate.mentions.sample.adapters.CommentsAdapter;
+import com.percolate.mentions.sample.adapters.UsersArrayAdapter;
+import com.percolate.mentions.sample.models.Comment;
+import com.percolate.mentions.sample.models.Mention;
+import com.percolate.mentions.sample.models.User;
+import com.percolate.mentions.sample.utils.MentionsLoaderUtils;
+import com.percolate.sample.Mentions;
+import com.percolate.sample.QueryListener;
+import com.percolate.sample.SuggestionsListener;
+import com.percolate.sample.sample.R;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements QueryListener, Su
     private UsersArrayAdapter usersArrayAdapter;
     private CommentsAdapter commentsAdapter;
 
-    private MentionsLoaderUtils mentionsLoaderUtils;
+    MentionsLoaderUtils mentionsLoaderUtils;
 
-    private Mentions mentions;
+    public Mentions mentions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

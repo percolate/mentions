@@ -1,4 +1,4 @@
-package com.percolate.percolatementions.adapters;
+package com.percolate.mentions.sample.adapters;
 
 import android.content.Context;
 import android.text.Spannable;
@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.percolate.caffeine.ViewUtils;
-import com.percolate.mentions.Mentionable;
-import com.percolate.percolatementions.R;
-import com.percolate.percolatementions.models.Comment;
+import com.percolate.mentions.sample.models.Comment;
+import com.percolate.sample.Mentionable;
+import com.percolate.sample.sample.R;
 
 import org.apache.commons.lang3.StringUtils;
 

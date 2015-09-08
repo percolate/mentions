@@ -1,4 +1,4 @@
-package com.percolate.percolatementions;
+package com.percolate.sample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

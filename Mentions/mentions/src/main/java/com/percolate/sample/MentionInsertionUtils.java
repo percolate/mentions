@@ -1,10 +1,12 @@
-package com.percolate.mentions;
+package com.percolate.sample;
 
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.EditText;
+
+import com.percolate.mentions.R;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -69,7 +71,7 @@ class MentionInsertionUtils {
     }
 
     /**
-     * Inserts a {@link Mentionable} into an {@link EditText} by inserting the mention's
+     * Inserts a {@link Mentionable} into an {@link EditText} by inserting the mentions'
      * name, highlighting it and keeping track of it in the array <code>mentions</code>.
      *
      * @param mention Mentionable     A mention to display in {@link EditText}.
@@ -120,7 +122,7 @@ class MentionInsertionUtils {
      * @param mention Mentionable     A new mention that was inserted into {@link EditText}.
      * @param start   int             The offset of the new mention.
      */
-    private void addMentionToInternalArray(Mentionable mention, int start) {
+    public void addMentionToInternalArray(Mentionable mention, int start) {
         if (mention != null && mentions != null) {
             mention.setMentionOffset(start);
             mentions.add(mention);
@@ -168,19 +170,16 @@ class MentionInsertionUtils {
                     RangeUtils<Integer> mentionsRange = RangeUtils.between(mentionStart + 1, mentionEnd - 1);
                     RangeUtils<Integer> editRange = RangeUtils.between(start, start + before);
 
+                    // Editing within mention - remove mention
                     if (editRange.isOverlappedBy(mentionsRange)) {
                         iterator.remove();
-                    }
-
-                    //Editing text before mention - change offset
-                    if (start <= mentionStart) {
+                    } else if (start <= mentionStart) {
+                        //Editing text before mention - change offset
                         int diff = count - before;
                         mention.setMentionOffset(mentionStart + diff);
                     }
-
                 }
             }
-            highlightMentionsText();
         }
     }
 
@@ -189,16 +188,16 @@ class MentionInsertionUtils {
      * is set at the starting and ending locations of the {@link Mentionable}s.
      */
     public void highlightMentionsText() {
-
-        // Clear current highlighting (note: just using clearSpans(); makes EditText fields act
-        // strange).
-        ForegroundColorSpan[] spans = editText.getEditableText().getSpans(0,
-                editText.getText().length(), ForegroundColorSpan.class);
-        for (ForegroundColorSpan span : spans) {
-            editText.getEditableText().removeSpan(span);
-        }
-
         if (mentions != null && !mentions.isEmpty()) {
+
+            // Clear current highlighting (note: just using clearSpans(); makes EditText fields act
+            // strange).
+            ForegroundColorSpan[] spans = editText.getEditableText().getSpans(0,
+                    editText.getText().length(), ForegroundColorSpan.class);
+            for (ForegroundColorSpan span : spans) {
+                editText.getEditableText().removeSpan(span);
+            }
+
             for (Iterator<Mentionable> iterator = mentions.iterator(); iterator.hasNext(); ) {
                 Mentionable mention = iterator.next();
                 int start = mention.getMentionOffset();
@@ -212,7 +211,7 @@ class MentionInsertionUtils {
                 } else {
                     //Something went wrong.  The expected text that we're trying to highlight does
                     // not match the actual text at that position.
-                    Log.w("PercolateMentions", "Mention lost. [" + mention.getMentionName() + "]");
+                    Log.w("Mentions", "Mention lost. [" + mention.getMentionName() + "]");
                     iterator.remove();
                 }
             }

@@ -1,4 +1,4 @@
-package com.percolate.mentions;
+package com.percolate.sample;
 
 /**
  * Listener to receive the valid query to use to search for mentions.

@@ -1,9 +1,8 @@
-package com.percolate.mentions;
+package com.percolate.sample;
 
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -179,9 +178,8 @@ public class Mentions {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                Log.d("MENTIONS", "ON TEXT CHANGED " + " char sequence " + charSequence + " start " + start + " before " + before + " count " + count);
-
                 mentionInsertionUtils.updateInternalMentionsArray(start, before, count);
+                mentionInsertionUtils.highlightMentionsText();
 
             }
 

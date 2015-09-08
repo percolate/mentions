@@ -1,4 +1,4 @@
-package com.percolate.mentions;
+package com.percolate.sample;
 
 import android.widget.EditText;
 
