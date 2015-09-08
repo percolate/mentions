@@ -45,3 +45,9 @@ It will inform you on whether to show or hide a suggestions drop down.
 
 - The QueryListener interface has the method onQueryReceived(String query). The library
 will provide you with a valid query that you could use to filter and search for mentions.
+
+
+# Testing
+
+The library contains unit tests with [Mockito](http://mockito.org/) and [Robolectric](http://robolectric.org/). To run the tests, please execute the command
+```gradlew clean test```.
