@@ -188,15 +188,16 @@ class MentionInsertionUtils {
      * is set at the starting and ending locations of the {@link Mentionable}s.
      */
     public void highlightMentionsText() {
-        if (mentions != null && !mentions.isEmpty()) {
 
-            // Clear current highlighting (note: just using clearSpans(); makes EditText fields act
-            // strange).
-            ForegroundColorSpan[] spans = editText.getEditableText().getSpans(0,
-                    editText.getText().length(), ForegroundColorSpan.class);
-            for (ForegroundColorSpan span : spans) {
-                editText.getEditableText().removeSpan(span);
-            }
+        // Clear current highlighting (note: just using clearSpans(); makes EditText fields act
+        // strange).
+        ForegroundColorSpan[] spans = editText.getEditableText().getSpans(0,
+                editText.getText().length(), ForegroundColorSpan.class);
+        for (ForegroundColorSpan span : spans) {
+            editText.getEditableText().removeSpan(span);
+        }
+
+        if (mentions != null && !mentions.isEmpty()) {
 
             for (Iterator<Mentionable> iterator = mentions.iterator(); iterator.hasNext(); ) {
                 Mentionable mention = iterator.next();
