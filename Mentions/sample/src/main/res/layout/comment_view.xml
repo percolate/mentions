@@ -13,7 +13,7 @@
         android:layout_height="3dp"
         android:background="@color/orange" />
 
-    <include layout="@layout/mentions_list_view" />
+    <include layout="@layout/user_list_view" />
 
     <!-- Comment Container -->
 
