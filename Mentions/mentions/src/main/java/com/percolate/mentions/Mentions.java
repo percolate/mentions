@@ -1,4 +1,4 @@
-package com.percolate.sample;
+package com.percolate.mentions;
 
 import android.content.Context;
 import android.text.Editable;

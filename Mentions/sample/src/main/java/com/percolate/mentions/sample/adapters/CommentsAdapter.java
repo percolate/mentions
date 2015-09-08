@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.percolate.caffeine.ViewUtils;
 import com.percolate.mentions.sample.R;
 import com.percolate.mentions.sample.models.Comment;
-import com.percolate.sample.Mentionable;
+import com.percolate.mentions.Mentionable;
 
 import org.apache.commons.lang3.StringUtils;
 

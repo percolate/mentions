@@ -18,9 +18,9 @@ import com.percolate.mentions.sample.models.Comment;
 import com.percolate.mentions.sample.models.Mention;
 import com.percolate.mentions.sample.models.User;
 import com.percolate.mentions.sample.utils.MentionsLoaderUtils;
-import com.percolate.sample.Mentions;
-import com.percolate.sample.QueryListener;
-import com.percolate.sample.SuggestionsListener;
+import com.percolate.mentions.Mentions;
+import com.percolate.mentions.QueryListener;
+import com.percolate.mentions.SuggestionsListener;
 
 import org.apache.commons.lang3.StringUtils;
 

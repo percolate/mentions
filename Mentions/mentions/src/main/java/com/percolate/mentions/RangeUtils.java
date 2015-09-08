@@ -1,4 +1,4 @@
-package com.percolate.sample;
+package com.percolate.mentions;
 
 import java.io.Serializable;
 import java.util.Comparator;

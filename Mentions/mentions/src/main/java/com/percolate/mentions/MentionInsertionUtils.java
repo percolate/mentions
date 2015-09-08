@@ -1,12 +1,10 @@
-package com.percolate.sample;
+package com.percolate.mentions;
 
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.EditText;
-
-import com.percolate.mentions.R;
 
 import java.util.ArrayList;
 import java.util.Iterator;

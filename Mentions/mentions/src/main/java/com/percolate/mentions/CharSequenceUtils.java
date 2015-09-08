@@ -1,4 +1,4 @@
-package com.percolate.sample;
+package com.percolate.mentions;
 
 /**
  * Char Sequence utility methods.

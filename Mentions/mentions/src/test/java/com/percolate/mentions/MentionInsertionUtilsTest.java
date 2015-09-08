@@ -1,9 +1,7 @@
-package com.percolate.sample;
+package com.percolate.mentions;
 
 import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
-
-import com.percolate.mentions.BuildConfig;
 
 import org.junit.Before;
 import org.junit.Test;

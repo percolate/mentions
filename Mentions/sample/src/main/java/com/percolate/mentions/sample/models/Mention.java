@@ -2,7 +2,7 @@ package com.percolate.mentions.sample.models;
 
 import android.widget.EditText;
 
-import com.percolate.sample.Mentionable;
+import com.percolate.mentions.Mentionable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
