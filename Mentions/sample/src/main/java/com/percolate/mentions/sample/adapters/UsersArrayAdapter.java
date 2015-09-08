@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.percolate.caffeine.ViewUtils;
+import com.percolate.mentions.sample.R;
 import com.percolate.mentions.sample.models.User;
-import com.percolate.sample.sample.R;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringUtils;

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.percolate.caffeine.ViewUtils;
+import com.percolate.mentions.sample.R;
 import com.percolate.mentions.sample.adapters.CommentsAdapter;
 import com.percolate.mentions.sample.adapters.UsersArrayAdapter;
 import com.percolate.mentions.sample.models.Comment;
@@ -20,7 +21,6 @@ import com.percolate.mentions.sample.utils.MentionsLoaderUtils;
 import com.percolate.sample.Mentions;
 import com.percolate.sample.QueryListener;
 import com.percolate.sample.SuggestionsListener;
-import com.percolate.sample.sample.R;
 
 import org.apache.commons.lang3.StringUtils;
 

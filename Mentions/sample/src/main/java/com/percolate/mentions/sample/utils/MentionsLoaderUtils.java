@@ -5,8 +5,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.percolate.mentions.sample.R;
 import com.percolate.mentions.sample.models.User;
-import com.percolate.sample.sample.R;
 
 import org.apache.commons.lang3.StringUtils;
 
