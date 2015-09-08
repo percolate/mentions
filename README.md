@@ -1,5 +1,3 @@
-Creator: Brent Watson
-
 # Mentions
 
 Use the simple & powerful API to easily setup @ mentions in your EditText.
