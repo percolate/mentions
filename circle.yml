@@ -1,3 +1,7 @@
+#
+# CircleCI Configuration
+#
+
 machine:
   environment:
     CACHE_DIR: /home/ubuntu/cache
@@ -18,5 +22,5 @@ dependencies:
 
 test:
   override:
-   - ./test_scripts/run_tests.sh:
-     timeout: 1800
+  - ./test_scripts/run_tests.sh:
+      timeout: 1800
