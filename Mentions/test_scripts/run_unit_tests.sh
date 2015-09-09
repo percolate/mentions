@@ -8,5 +8,5 @@ echo "Running Unit Tests..."
 if [[ "$CIRCLE_BRANCH" = "master" ]]; then
   echo "Skipping tests on prod builds (on master branch)"
 else
-  ./gradlew test --stacktrace
+  ./gradlew testDebugUnitTest --stacktrace
 fi
