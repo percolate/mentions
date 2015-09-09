@@ -26,15 +26,12 @@ import static org.mockito.MockitoAnnotations.initMocks;
 @Config(constants = BuildConfig.class, sdk = 21)
 public class MentionInsertionUtilsTest {
 
-    private final String TEST_STRING = "test";
+    private final String TEST_STRING = "Test";
 
     private EditText editText;
 
     @Mock
     private Mentionable mention;
-
-    @Mock
-    private Mentionable mentionable;
 
     private MentionInsertionUtils mentionInsertionUtils;
 
@@ -48,7 +45,7 @@ public class MentionInsertionUtilsTest {
     }
 
     /**
-     * Ex: "Hello Brent Watson"
+     * "Hello Brent Watson" -> "Hello Brent WatsoTestn".
      *
      * Edit within the mention "Brent Watson" and test whether the mention was removed.
      */
@@ -59,7 +56,7 @@ public class MentionInsertionUtilsTest {
     }
 
     /**
-     * Ex: "Hello Brent Watson"
+     * "Hello Brent Watson" -> "".
      *
      * Select all the text and remove it and test whether the mention was removed.
      */
@@ -70,7 +67,7 @@ public class MentionInsertionUtilsTest {
     }
 
     /**
-     * Ex: "Hello Brent Watson"
+     * "Hello Brent Watson" -> "Hatson".
      *
      * Perform selection "ello Brent W" and remove text. Test if the mention was removed.
      */
@@ -81,7 +78,7 @@ public class MentionInsertionUtilsTest {
     }
 
     /**
-     * Ex: "Hello Brent Watson"
+     * "Hello Brent Watson" -> "HTestatson".
      *
      * Perform selection "ello Brent W" and replace with text <code>TEST_STRING</code>.
      * Test if the mention was removed.
@@ -94,7 +91,7 @@ public class MentionInsertionUtilsTest {
     }
 
     /**
-     * Ex: "Hello Brent Watson"
+     * "Hello Brent Watson" -> "Hello TestBrent Watson".
      *
      * Add <code>TEST_STRING</code> before mention "Brent Watson" and test whether the mentions'
      * offset was updated.
@@ -103,11 +100,11 @@ public class MentionInsertionUtilsTest {
     public void testMentionOffsetUpdate() {
         mentionInsertionUtils.updateInternalMentionsArray(6, 0, TEST_STRING.length());
 
-        List<Mentionable> insertedMentions = mentionInsertionUtils.getMentions();
+        List<Mentionable> mentions = mentionInsertionUtils.getMentions();
 
-        assertNotNull(insertedMentions);
-        assertTrue("Did not insert mention", insertedMentions.size() == 1);
-        verify(insertedMentions.get(0)).setMentionOffset(6 + TEST_STRING.length());
+        assertNotNull(mentions);
+        assertTrue("Mentions should not have been removed", mentions.size() == 1);
+        verify(mention).setMentionOffset("Hello ".length() + TEST_STRING.length());
     }
 
     /**
@@ -117,17 +114,18 @@ public class MentionInsertionUtilsTest {
     public void testMentionHighlighting() {
         editText.setText("Hello Brent Watson");
         mentionInsertionUtils.highlightMentionsText();
-        ForegroundColorSpan[] highlightSpans = editText.getEditableText().getSpans(0,
+        ForegroundColorSpan[] highlightSpans = editText.getEditableText().getSpans(6,
                                             editText.getText().length(), ForegroundColorSpan.class);
         assertNotNull(highlightSpans);
         assertTrue("Did not highlight mention", highlightSpans.length == 1);
     }
 
     /**
-     * Creates a mock mention with name "Brent Watson" at offset 6.
+     * Creates a mock mention with name "Brent Watson" at offset 6. The offset is 6, because we are
+     * inserting the string "Hello " before the mention.
      */
     private void createMention() {
-        when(mention.getMentionOffset()).thenReturn(6);
+        when(mention.getMentionOffset()).thenReturn("Hello ".length());
         when(mention.getMentionName()).thenReturn("Brent Watson");
         when(mention.getMentionLength()).thenReturn("Brent Watson".length());
     }

@@ -77,7 +77,17 @@ public class MentionCheckerUtilsTest {
     public void checkSearchFailsOnSymbols() {
         setTextAndSelection("@!Brent W");
         String query = mentionCheckerUtils.doMentionCheck();
-        assertTrue("A search beginning with an non alphanumeric character was valid", query.isEmpty());
+        assertTrue("A search beginning with an non alphanumeric character was valid.", query.isEmpty());
+    }
+
+    /**
+     * If a search begins with @@ then, it should not consider the extra @ symbol as search text.
+     */
+    @Test
+    public void checkSearchFailsOnDoubleAt() {
+        setTextAndSelection("@@");
+        String query = mentionCheckerUtils.doMentionCheck();
+        assertTrue("Double @@ symbol was valid.", query.isEmpty());
     }
 
     /**
@@ -91,11 +101,31 @@ public class MentionCheckerUtilsTest {
     }
 
     /**
+     * If {@link EditText} is set to a blank string, then it should not return a query.
+     */
+    @Test
+    public void checkSearchOnBlankString() {
+        setTextAndSelection("");
+        String query = mentionCheckerUtils.doMentionCheck();
+        assertTrue("A blank search returned a query.", query.isEmpty());
+    }
+
+    /**
+     * If {@link EditText} is set to null, then it should not return a query.
+     */
+    @Test
+    public void checkSearchFailsOnNull() {
+        setTextAndSelection(null);
+        String query = mentionCheckerUtils.doMentionCheck();
+        assertTrue("A null search returned a query.", query.isEmpty());
+    }
+
+    /**
      * Set text and selection in {@link EditText} view.
      */
     private void setTextAndSelection(String text) {
         editText.setText(text);
-        editText.setSelection(text.length());
+        editText.setSelection(text != null ? text.length() : 0);
     }
 
 }

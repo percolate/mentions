@@ -4,8 +4,8 @@ Use the simple & powerful API to easily setup @ mentions in your EditText.
 
 # Usage
 
-We provide a builder through which you could setup different options for the at
-mentions. Here is example:
+We provide a builder through which you could setup different options for @ mentions.
+Here is an example:
 
 ```
 Mentions mentions = new Mentions.Builder(context, commentField)

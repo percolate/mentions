@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:layout_alignParentBottom="true"
     android:orientation="vertical">
 
@@ -30,9 +31,9 @@
             android:id="@+id/comment_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1.0"
-            android:background="@color/transparent"
             android:paddingBottom="15dp"
             android:maxLines="4"
             android:lineSpacingMultiplier="1.2"

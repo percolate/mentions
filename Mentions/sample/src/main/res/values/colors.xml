@@ -4,5 +4,4 @@
     <color name="orange_faded">#80f16421</color>
     <color name="transparent">@android:color/transparent</color>
     <color name="grey_light">#cccccc</color>
-    <color name="white">#FFFFFF</color>
 </resources>

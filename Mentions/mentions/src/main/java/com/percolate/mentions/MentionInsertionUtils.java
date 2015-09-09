@@ -1,5 +1,6 @@
 package com.percolate.mentions;
 
+import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
@@ -120,7 +121,7 @@ class MentionInsertionUtils {
      * @param mention Mentionable     A new mention that was inserted into {@link EditText}.
      * @param start   int             The offset of the new mention.
      */
-    public void addMentionToInternalArray(Mentionable mention, int start) {
+    protected void addMentionToInternalArray(Mentionable mention, int start) {
         if (mention != null && mentions != null) {
             mention.setMentionOffset(start);
             mentions.add(mention);
@@ -203,8 +204,8 @@ class MentionInsertionUtils {
                 int end = start + mention.getMentionLength();
                 if (editText.length() >= end && StringUtils.equals(editText.getText()
                         .subSequence(start, end), mention.getMentionName())) {
-                    ForegroundColorSpan fbSpan = new ForegroundColorSpan(editText.getContext()
-                                                    .getResources().getColor(textHighlightColor));
+                    ForegroundColorSpan fbSpan = new ForegroundColorSpan(ContextCompat.getColor(
+                                                        editText.getContext(), textHighlightColor));
                     editText.getEditableText().setSpan(fbSpan, start, end,
                                                               Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 } else {
