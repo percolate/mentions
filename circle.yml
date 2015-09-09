@@ -14,7 +14,7 @@ general:
 
 dependencies:
   pre:
-    - pip install codecov
+    - sudo pip install codecov
   cache_directories:
     - /home/ubuntu/cache
     - /home/ubuntu/cache/android-sdk-linux
