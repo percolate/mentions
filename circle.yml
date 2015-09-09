@@ -24,3 +24,6 @@ test:
   override:
   - ./test_scripts/run_unit_tests.sh:
       timeout: 1800
+  post:
+  - pip install --user codecov
+  - codecov --token=$CODECOV_TOKEN
