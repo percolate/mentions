@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: "jacoco"
 
 android {
     compileSdkVersion 23
@@ -15,7 +16,24 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled true
+        }
     }
+}
+
+task coverageReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    classDirectories = fileTree(
+            dir: './build/intermediates/classes/debug',
+            excludes: ['com/percolate/mentions/R*.class',
+                       'com/percolate/mentions/BuildConfig.class',
+                       'com/percolate/mentions/CharSequenceUtils.class',
+                       'com/percolate/mentions/StringUtils.class',
+                       'com/percolate/mentions/RangeUtils.class'
+            ]
+    )
+    sourceDirectories = files(['src/main/java'])
+    executionData = files('build/jacoco/testDebugUnitTest.exec')
 }
 
 dependencies {
