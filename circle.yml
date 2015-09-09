@@ -3,9 +3,12 @@ machine:
     ANDROID_HOME: /home/ubuntu/cache/android-sdk-linux
     GRADLE_OPTS: -Xmx512m
 
+general:
+  build_dir: Mentions
+
 test:
   override:
-  - ./Mentions/gradlew test --stacktrace
+  - gradlew test --stacktrace
   post:
     - pip install --user codecov 
     - codecov --token=$CODECOV_TOKEN
