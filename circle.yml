@@ -1,6 +1,5 @@
 machine:
   environment:
-    ANDROID_HOME: /home/ubuntu/cache/android-sdk-linux
     GRADLE_OPTS: -Xmx512m
 
 general:
@@ -8,7 +7,7 @@ general:
 
 test:
   override:
-  - gradlew test --stacktrace
+   - gradlew test --stacktrace
   post:
     - pip install --user codecov 
     - codecov --token=$CODECOV_TOKEN
