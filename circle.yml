@@ -5,7 +5,7 @@ machine:
 
 test:
   override:
-    - ./Mentions/gradlew clean test
+  - ./Mentions/gradlew test --stracktrace
   post:
     - pip install --user codecov 
     - codecov --token=$CODECOV_TOKEN
