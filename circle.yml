@@ -1,0 +1,8 @@
+machine:
+  environment:
+    ANDROID_HOME: /home/ubuntu/cache/android-sdk-linux
+    GRADLE_OPTS: -Xmx512m
+
+test:
+  override:
+  - gradlew clean test
