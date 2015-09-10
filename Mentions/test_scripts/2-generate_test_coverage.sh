@@ -5,3 +5,5 @@
 
 ./gradlew mentions:clean mentions:coverageReport
 
+mv -p $CIRCLE_ARTIFACTS/coverage_report/ ./mentions/build/reports/jacoco/coverageReport/coverageReport.xml
+
