@@ -9,5 +9,5 @@ if [ -f $FILE ];
 then
     ./codecov -t $CODECOV_TOKEN -f FILE
 else 
-    echo "Coverage report was not generated. Fail to upload to Codecov."
+    return 0;
 fi
