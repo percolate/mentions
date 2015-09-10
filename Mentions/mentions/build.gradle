@@ -23,6 +23,7 @@ android {
 }
 
 task coverageReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+
     classDirectories = fileTree(
             dir: './build/intermediates/classes/debug',
             excludes: ['com/percolate/mentions/R*.class',
@@ -34,6 +35,11 @@ task coverageReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     )
     sourceDirectories = files(['src/main/java'])
     executionData = files('build/jacoco/testDebugUnitTest.exec')
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+    }
 }
 
 dependencies {

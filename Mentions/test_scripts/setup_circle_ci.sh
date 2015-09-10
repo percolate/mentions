@@ -1,4 +1,4 @@
-MPORTANT:
+IMPORTANT:
 # IF YOU CHANGE THIS FILE YOU MUST LOG INTO CIRCLECI AND CLEAR THE CACHE
 # OTHERWISE CHANGES TO THIS FILE WILL NOT EXECUTE
 #
@@ -30,12 +30,3 @@ else
   echo "Skipping Android SDK updates.  Clear cache to make them happen again."
 fi
 
-# Update Gradle to version 2.6
-if [ ! -e $GRADLE_UPDATE_INSTALLED_TOUCH_FILE ]; then
-  wget https://services.gradle.org/distributions/gradle-2.6-all.zip
-  unzip -q gradle-2.6-all.zip
-  mv gradle-2.6 $CACHE_DIR
-  touch $GRADLE_UPDATE_INSTALLED_TOUCH_FILE
-else
-  echo "Skipping Gradle update.  Clear cache to make it happen again."
-fi

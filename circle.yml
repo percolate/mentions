@@ -13,8 +13,6 @@ general:
   build_dir: Mentions
 
 dependencies:
-  pre:
-    - sudo pip install codecov
   cache_directories:
     - /home/ubuntu/cache
     - /home/ubuntu/cache/android-sdk-linux
@@ -24,7 +22,5 @@ dependencies:
 
 test:
   override:
-  - ./test_scripts/run_unit_tests.sh:
+  - ./test_scripts/run_tests.sh:
       timeout: 1800
-  post:
-  - codecov
