@@ -19,4 +19,4 @@ check_last_command_for_errors "Unit tests failed."
 check_last_command_for_errors "Failed to generate Jacoco report."
 
 ./test_scripts/3-upload_to_codecov.sh
-/check_last_command_for_errors "Failed to upload to Codecov."
+check_last_command_for_errors "Failed to upload to Codecov."
