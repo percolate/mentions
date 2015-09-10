@@ -5,4 +5,4 @@
 
 echo "Running Unit Tests..."
 
-./gradlew clean test --stacktrace
+$GRADLE_HOME/gradle clean test --stacktrace
