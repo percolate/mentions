@@ -17,12 +17,18 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-public class MentionCheckerUtilsTest {
+public class MentionCheckerUITest {
 
+    // Mock EditText
     private EditText editText;
 
+    // MentionCheckerUtils
     private MentionCheckerUtils mentionCheckerUtils;
 
+    /**
+     * Use Robolectric to create mock {@link EditText} view.
+     * Instaniate {@link MentionCheckerUtils}.
+     */
     @Before
     public void setUp() {
         editText = new EditText(RuntimeEnvironment.application);
@@ -38,22 +44,22 @@ public class MentionCheckerUtilsTest {
         mentionCheckerUtils.setMaxCharacters(3);
 
         // 1 character (Pass within char limit)
-        setTextAndSelection("Hello @B");
+        MentionTestUtils.setTextAndSelection(editText, "Hello @B");
         String query1 = mentionCheckerUtils.doMentionCheck();
         assertTrue("Query is invalid.", query1.equals("B"));
 
         // 2 characters (Pass within char limit)
-        setTextAndSelection("Hello @Br");
+        MentionTestUtils.setTextAndSelection(editText, "Hello @Br");
         String query2 = mentionCheckerUtils.doMentionCheck();
         assertTrue("Query is invalid.", query2.equals("Br"));
 
         // 3 characters (Pass within char limit)
-        setTextAndSelection("Hello @Bre");
+        MentionTestUtils.setTextAndSelection(editText, "Hello @Bre");
         String query3 = mentionCheckerUtils.doMentionCheck();
         assertTrue("Query is invalid.", query3.equals("Bre"));
 
         // 4 characters (Fail out of char limit)
-        setTextAndSelection("Hello @Bren");
+        MentionTestUtils.setTextAndSelection(editText, "Hello @Bren");
         String query4 = mentionCheckerUtils.doMentionCheck();
         assertTrue("Query is invalid.", query4.isEmpty());
     }
@@ -65,7 +71,7 @@ public class MentionCheckerUtilsTest {
      */
     @Test
     public void checkSearchFailsOnEmail() {
-        setTextAndSelection("hello@percolate.com");
+        MentionTestUtils.setTextAndSelection(editText, "hello@percolate.com");
         String query = mentionCheckerUtils.doMentionCheck();
         assertTrue("An email is being considered as a mention.", query.isEmpty());
     }
@@ -75,7 +81,7 @@ public class MentionCheckerUtilsTest {
      */
     @Test
     public void checkSearchFailsOnSymbols() {
-        setTextAndSelection("@!Brent W");
+        MentionTestUtils.setTextAndSelection(editText, "@!Brent W");
         String query = mentionCheckerUtils.doMentionCheck();
         assertTrue("A search beginning with an non alphanumeric character was valid.", query.isEmpty());
     }
@@ -85,7 +91,7 @@ public class MentionCheckerUtilsTest {
      */
     @Test
     public void checkSearchFailsOnDoubleAt() {
-        setTextAndSelection("@@");
+        MentionTestUtils.setTextAndSelection(editText, "@@");
         String query = mentionCheckerUtils.doMentionCheck();
         assertTrue("Double @@ symbol was valid.", query.isEmpty());
     }
@@ -95,7 +101,7 @@ public class MentionCheckerUtilsTest {
      */
     @Test
     public void checkSearchPassesOnAlphaNumeric() {
-        setTextAndSelection("@Brent Watson");
+        MentionTestUtils.setTextAndSelection(editText, "@Brent Watson");
         String query = mentionCheckerUtils.doMentionCheck();
         assertTrue("Search beginning with alpha numeric character failed.", !query.isEmpty());
     }
@@ -105,7 +111,7 @@ public class MentionCheckerUtilsTest {
      */
     @Test
     public void checkSearchOnBlankString() {
-        setTextAndSelection("");
+        MentionTestUtils.setTextAndSelection(editText, "");
         String query = mentionCheckerUtils.doMentionCheck();
         assertTrue("A blank search returned a query.", query.isEmpty());
     }
@@ -115,17 +121,8 @@ public class MentionCheckerUtilsTest {
      */
     @Test
     public void checkSearchFailsOnNull() {
-        setTextAndSelection(null);
+        MentionTestUtils.setTextAndSelection(editText, null);
         String query = mentionCheckerUtils.doMentionCheck();
         assertTrue("A null search returned a query.", query.isEmpty());
     }
-
-    /**
-     * Set text and selection in {@link EditText} view.
-     */
-    private void setTextAndSelection(String text) {
-        editText.setText(text);
-        editText.setSelection(text != null ? text.length() : 0);
-    }
-
 }

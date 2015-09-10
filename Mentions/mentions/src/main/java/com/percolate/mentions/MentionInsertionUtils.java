@@ -166,7 +166,8 @@ class MentionInsertionUtils {
                     int mentionStart = mention.getMentionOffset();
                     int mentionEnd = mentionStart + mention.getMentionLength();
 
-                    RangeUtils<Integer> mentionsRange = RangeUtils.between(mentionStart + 1, mentionEnd - 1);
+                    RangeUtils<Integer> mentionsRange = RangeUtils.between(mentionStart + 1,
+                                                                           mentionEnd - 1);
                     RangeUtils<Integer> editRange = RangeUtils.between(start, start + before);
 
                     // Editing within mention - remove mention
@@ -204,9 +205,10 @@ class MentionInsertionUtils {
                 int end = start + mention.getMentionLength();
                 if (editText.length() >= end && StringUtils.equals(editText.getText()
                         .subSequence(start, end), mention.getMentionName())) {
-                    ForegroundColorSpan fbSpan = new ForegroundColorSpan(ContextCompat.getColor(
-                                                        editText.getContext(), textHighlightColor));
-                    editText.getEditableText().setSpan(fbSpan, start, end,
+                    ForegroundColorSpan highlightSpan = new ForegroundColorSpan(
+                                                       ContextCompat.getColor(editText.getContext(),
+                                                                               textHighlightColor));
+                    editText.getEditableText().setSpan(highlightSpan, start, end,
                                                               Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 } else {
                     //Something went wrong.  The expected text that we're trying to highlight does
@@ -232,7 +234,7 @@ class MentionInsertionUtils {
                 int mentionEnd = mention.getMentionLength();
                 if (mentionEnd <= editText.getText().length()) {
                     String displayText = StringUtils.substring(editText.getText().toString(),
-                            mentionStart, mentionEnd);
+                            mentionStart, mentionStart + mentionEnd);
                     if (StringUtils.isBlank(displayText) || !StringUtils.equals(displayText,
                             mention.getMentionName())) {
                         return false;
