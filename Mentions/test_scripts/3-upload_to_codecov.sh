@@ -3,11 +3,11 @@
 # Upload Jacoco report to Codecov
 #
 
-FILE="../mentions/build/reports/jacoco/coverageReport/coverageReport.xml"
+FILE="./mentions/build/reports/jacoco/coverageReport/coverageReport.xml"
 
-if [ -f $FILE ];
+if [ -a $FILE ];
 then
-    ./codecov -t $CODECOV_TOKEN -f FILE
+    ./test_scripts/codecov -t $CODECOV_TOKEN -f FILE
 else 
-    return 0;
+    exit 1 
 fi
