@@ -97,20 +97,10 @@ public class MentionCheckerUITest {
     }
 
     /**
-     * Tests whether a search that begins with an alpha numeric character is valid.
-     */
-    @Test
-    public void checkSearchPassesOnAlphaNumeric() {
-        MentionTestUtils.setTextAndSelection(editText, "@Brent Watson");
-        String query = mentionCheckerUtils.doMentionCheck();
-        assertTrue("Search beginning with alpha numeric character failed.", !query.isEmpty());
-    }
-
-    /**
      * If {@link EditText} is set to a blank string, then it should not return a query.
      */
     @Test
-    public void checkSearchOnBlankString() {
+    public void checkSearchFailsOnBlankString() {
         MentionTestUtils.setTextAndSelection(editText, "");
         String query = mentionCheckerUtils.doMentionCheck();
         assertTrue("A blank search returned a query.", query.isEmpty());
@@ -125,4 +115,15 @@ public class MentionCheckerUITest {
         String query = mentionCheckerUtils.doMentionCheck();
         assertTrue("A null search returned a query.", query.isEmpty());
     }
+
+    /**
+     * Tests whether a search that begins with an alpha numeric character is valid.
+     */
+    @Test
+    public void checkSearchPassesOnAlphaNumeric() {
+        MentionTestUtils.setTextAndSelection(editText, "@Brent Watson");
+        String query = mentionCheckerUtils.doMentionCheck();
+        assertTrue("Search beginning with alpha numeric character failed.", !query.isEmpty());
+    }
+
 }

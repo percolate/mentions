@@ -16,22 +16,35 @@ import java.util.List;
  */
 public class Mentions {
 
+    // Context
     private Context context;
 
+    // EditText to setup @ mentions
     private EditText editText;
 
+    // QueryListener to notify client of queries determined to be valid by {@link MentionCheckerUtils}
     private QueryListener queryListener;
 
+    // SuggestionListener to notify client when to display and hide a suggestions drop down
     private SuggestionsListener suggestionsListener;
 
-    // helper classes to handle checking and inserting mentions
+    // Helper class that determines whether a query after @ is valid or not.
     private MentionCheckerUtils mentionCheckerUtils;
+
+    // Helper class for inserting and highlighting mentions.
     private MentionInsertionUtils mentionInsertionUtils;
 
+    /**
+     * Pass in your {@link EditText} to give it the ability to @ mention.
+
+     * @param context   Context     Although not used in the library, it passed for future use.
+     * @param editText  EditText    The EditText that will have @ mention capability.
+     */
     private Mentions(Context context, EditText editText) {
         this.context = context;
         this.editText = editText;
 
+        // instantiate helper classes
         this.mentionCheckerUtils = new MentionCheckerUtils(editText);
         this.mentionInsertionUtils = new MentionInsertionUtils(editText);
     }
@@ -42,6 +55,7 @@ public class Mentions {
      */
     public static class Builder {
 
+        // Mentions instance
         private Mentions mentionsLib;
 
         /**
