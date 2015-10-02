@@ -166,21 +166,21 @@ class MentionInsertionUtils {
                     int mentionStart = mention.getMentionOffset();
                     int mentionEnd = mentionStart + mention.getMentionLength();
 
-                    RangeUtils<Integer> mentionsRange = RangeUtils.between(mentionStart + 1,
-                                                                           mentionEnd - 1);
-                    RangeUtils<Integer> editRange = RangeUtils.between(start, start + before);
-
-                    // Editing within mention - remove mention
-                    if (editRange.isOverlappedBy(mentionsRange)) {
+                    //Editing text within mention - delete the mention
+                    int editPos = start + count;
+                    if (editPos > mentionStart + 1 && editPos < mentionEnd) {
                         iterator.remove();
-                    } else if (start <= mentionStart) {
-                        //Editing text before mention - change offset
+                    }
+
+                    //Editing text before mention - change offset
+                    if (start <= mentionStart) {
                         int diff = count - before;
                         mention.setMentionOffset(mentionStart + diff);
                     }
                 }
             }
         }
+            highlightMentionsText();
     }
 
     /**
@@ -198,22 +198,28 @@ class MentionInsertionUtils {
         }
 
         if (mentions != null && !mentions.isEmpty()) {
-
             for (Iterator<Mentionable> iterator = mentions.iterator(); iterator.hasNext(); ) {
+
                 Mentionable mention = iterator.next();
-                int start = mention.getMentionOffset();
-                int end = start + mention.getMentionLength();
-                if (editText.length() >= end && StringUtils.equals(editText.getText()
-                        .subSequence(start, end), mention.getMentionName())) {
-                    ForegroundColorSpan highlightSpan = new ForegroundColorSpan(
-                                                       ContextCompat.getColor(editText.getContext(),
-                                                                               textHighlightColor));
-                    editText.getEditableText().setSpan(highlightSpan, start, end,
-                                                              Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                } else {
-                    //Something went wrong.  The expected text that we're trying to highlight does
-                    // not match the actual text at that position.
-                    Log.w("Mentions", "Mention lost. [" + mention.getMentionName() + "]");
+
+                try {
+                    int start = mention.getMentionOffset();
+                    int end = start + mention.getMentionLength();
+                    if (editText.length() >= end && StringUtils.equals(editText.getText()
+                            .subSequence(start, end), mention.getMentionName())) {
+                        ForegroundColorSpan highlightSpan = new ForegroundColorSpan(
+                                ContextCompat.getColor(editText.getContext(), textHighlightColor));
+                        editText.getEditableText().setSpan(highlightSpan, start, end,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    } else {
+                        //Something went wrong.  The expected text that we're trying to highlight does
+                        // not match the actual text at that position.
+                        Log.w("Mentions", "Mention lost. [" + mention.getMentionName() + "]");
+                        iterator.remove();
+                    }
+                } catch (Exception ex) {
+                    Log.e("Mentions", "Mention removed due to exception. + [" +
+                                                                mention.getMentionName() + "]", ex);
                     iterator.remove();
                 }
             }
@@ -245,6 +251,4 @@ class MentionInsertionUtils {
 
         return true;
     }
-
-
 }

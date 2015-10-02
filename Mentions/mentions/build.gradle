@@ -3,7 +3,7 @@ apply plugin: "jacoco"
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         minSdkVersion 16
@@ -29,8 +29,7 @@ task coverageReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
             excludes: ['com/percolate/mentions/R*.class',
                        'com/percolate/mentions/BuildConfig.class',
                        'com/percolate/mentions/CharSequenceUtils.class',
-                       'com/percolate/mentions/StringUtils.class',
-                       'com/percolate/mentions/RangeUtils.class'
+                       'com/percolate/mentions/StringUtils.class'
             ]
     )
     sourceDirectories = files(['src/main/java'])
