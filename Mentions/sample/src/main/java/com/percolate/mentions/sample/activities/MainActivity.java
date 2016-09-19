@@ -1,26 +1,28 @@
 package com.percolate.mentions.sample.activities;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.percolate.caffeine.ViewUtils;
+import com.percolate.mentions.Mentions;
+import com.percolate.mentions.QueryListener;
+import com.percolate.mentions.SuggestionsListener;
 import com.percolate.mentions.sample.R;
 import com.percolate.mentions.sample.adapters.CommentsAdapter;
-import com.percolate.mentions.sample.adapters.UsersArrayAdapter;
+import com.percolate.mentions.sample.adapters.RecyclerItemClickListener;
+import com.percolate.mentions.sample.adapters.UsersAdapter;
 import com.percolate.mentions.sample.models.Comment;
 import com.percolate.mentions.sample.models.Mention;
 import com.percolate.mentions.sample.models.User;
 import com.percolate.mentions.sample.utils.MentionsLoaderUtils;
-import com.percolate.mentions.Mentions;
-import com.percolate.mentions.QueryListener;
-import com.percolate.mentions.SuggestionsListener;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -33,37 +35,57 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity implements QueryListener, SuggestionsListener {
 
+    /**
+     * Comment field.
+     */
     private EditText commentField;
 
+    /**
+     * Send button.
+     */
     private Button sendCommentButton;
 
-    private UsersArrayAdapter usersArrayAdapter;
+    /**
+     * Adapter to display suggestions.
+     */
+    private UsersAdapter usersAdapter;
+
+    /**
+     * Adapter to display comments.
+     */
     private CommentsAdapter commentsAdapter;
 
-    MentionsLoaderUtils mentionsLoaderUtils;
+    /**
+     * Utility class to load from a JSON file.
+     */
+    private MentionsLoaderUtils mentionsLoaderUtils;
 
+    /**
+     * Mention object provided by library to configure at mentions.
+     */
     public Mentions mentions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        init();
+        setupMentionsList();
+        setupCommentsList();
+        setupSendButtonTextWatcher();
+    }
 
+    /**
+     * Initialize views and utility objects.
+     */
+    private void init() {
         commentField = ViewUtils.findViewById(this, R.id.comment_field);
         sendCommentButton = ViewUtils.findViewById(this, R.id.send_comment);
-
         mentions = new Mentions.Builder(this, commentField)
                 .suggestionsListener(this)
                 .queryListener(this)
                 .build();
-
         mentionsLoaderUtils = new MentionsLoaderUtils(this);
-
-        setupMentionsList();
-        setupAddedMentionsList();
-        setupSendButtonTextWatcher();
-
     }
 
     /**
@@ -71,40 +93,39 @@ public class MainActivity extends AppCompatActivity implements QueryListener, Su
      * the mentions list and sets the on item click listener.
      */
     private void setupMentionsList() {
-        ListView mentionsList = ViewUtils.findViewById(this, R.id.mentions_list);
-
-        // set adapter
-        usersArrayAdapter = new UsersArrayAdapter(this);
-        mentionsList.setAdapter(usersArrayAdapter);
+        final RecyclerView mentionsList = ViewUtils.findViewById(this, R.id.mentions_list);
+        mentionsList.setLayoutManager(new LinearLayoutManager(this));
+        usersAdapter = new UsersAdapter(this);
+        mentionsList.setAdapter(usersAdapter);
 
         // set on item click listener
-        mentionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mentionsList.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                User user = usersArrayAdapter.getItem(i);
-
+            public void onItemClick(final View view, final int position) {
+                final User user = usersAdapter.getItem(position);
                 /*
                  * We are creating a mentions object which implements the
                  * <code>Mentionable</code> interface this allows the library to set the offset
                  * and length of the mention.
                  */
-                Mention mention = new Mention();
-                mention.setMentionName(user.getFullName());
-                mentions.insertMention(mention);
-            }
-        });
-    }
+                if (user != null) {
+                    final Mention mention = new Mention();
+                    mention.setMentionName(user.getFullName());
+                    mentions.insertMention(mention);
+                }
 
+            }
+        }));
+    }
 
     /**
      * After typing some text with mentions in the comment box and clicking on send, you will
      * be able to see the comment with the mentions highlighted above the comment box. This method
      * setups the adapter for this list.
      */
-    private void setupAddedMentionsList() {
-
-        // setup adapter
-        final ListView commentsList = ViewUtils.findViewById(this, R.id.comments_list);
+    private void setupCommentsList() {
+        final RecyclerView commentsList = ViewUtils.findViewById(this, R.id.comments_list);
+        commentsList.setLayoutManager(new LinearLayoutManager(this));
         commentsAdapter = new CommentsAdapter(this);
         commentsList.setAdapter(commentsAdapter);
 
@@ -113,12 +134,10 @@ public class MainActivity extends AppCompatActivity implements QueryListener, Su
             @Override
             public void onClick(View view) {
                 if (StringUtils.isNotBlank(commentField.getText())) {
-
-                    // hide empty view
                     ViewUtils.hideView(MainActivity.this, R.id.comments_empty_view);
 
                     // add comment to list
-                    Comment comment = new Comment();
+                    final Comment comment = new Comment();
                     comment.setComment(commentField.getText().toString());
                     comment.setMentions(mentions.getInsertedMentions());
                     commentsAdapter.add(comment);
@@ -137,46 +156,39 @@ public class MainActivity extends AppCompatActivity implements QueryListener, Su
      * view.
      */
     private void setupSendButtonTextWatcher() {
+        final int orange = ContextCompat.getColor(MainActivity.this, R.color.orange);
+        final int orangeFaded = ContextCompat.getColor(MainActivity.this, R.color.orange_faded);
+
         commentField.addTextChangedListener(new TextWatcher() {
-
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
 
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) {
-                    sendCommentButton.setTextColor(MainActivity.this.getResources().getColor(R.color.orange));
+                    sendCommentButton.setTextColor(orange);
                 } else {
-                    sendCommentButton.setTextColor(MainActivity.this.getResources().getColor(R.color.orange_faded));
+                    sendCommentButton.setTextColor(orangeFaded);
                 }
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {}
 
         });
     }
 
     @Override
-    public void onQueryReceived(String query) {
-        List<User> users = mentionsLoaderUtils.searchUsers(query);
+    public void onQueryReceived(final String query) {
+        final List<User> users = mentionsLoaderUtils.searchUsers(query);
         if (users != null && !users.isEmpty()) {
-
-            usersArrayAdapter.clear();
-            usersArrayAdapter.setCurrentQuery(query);
-            usersArrayAdapter.addAll(users);
-
+            usersAdapter.clear();
+            usersAdapter.setCurrentQuery(query);
+            usersAdapter.addAll(users);
             showMentionsList(true);
-
         } else {
-
             showMentionsList(false);
         }
-
     }
 
     /**
@@ -204,9 +216,7 @@ public class MainActivity extends AppCompatActivity implements QueryListener, Su
      *                          the empty suggestions list view should be shown.
      */
     private void showMentionsList(boolean display) {
-
         ViewUtils.showView(this, R.id.mentions_list_layout);
-
         if (display) {
             ViewUtils.showView(this, R.id.mentions_list);
             ViewUtils.hideView(this, R.id.mentions_empty_view);

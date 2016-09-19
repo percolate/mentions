@@ -7,7 +7,7 @@
               android:orientation="horizontal"
               tools:ignore="RtlHardcoded,contentDescription">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/drip_logo"/>

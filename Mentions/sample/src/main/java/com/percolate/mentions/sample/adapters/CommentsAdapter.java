@@ -1,6 +1,8 @@
 package com.percolate.mentions.sample.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -8,13 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.percolate.caffeine.ViewUtils;
+import com.percolate.mentions.Mentionable;
 import com.percolate.mentions.sample.R;
 import com.percolate.mentions.sample.models.Comment;
-import com.percolate.mentions.Mentionable;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,63 +24,63 @@ import java.util.List;
 /**
  * Adapter for added {@link Comment}s.
  */
-public class CommentsAdapter extends ArrayAdapter<Comment> {
+public class CommentsAdapter extends RecyclerArrayAdapter<Comment, CommentsAdapter.CommentViewHolder> {
 
+    /**
+     * {@link Context}.
+     */
     private Context context;
 
-    public CommentsAdapter(Context context) {
-        super(context, R.layout.item_comment);
+    /**
+     * {@link ForegroundColorSpan}.
+     */
+    private ForegroundColorSpan colorSpan;
+
+    public CommentsAdapter(final Context context) {
         this.context = context;
+        final int orange = ContextCompat.getColor(context, R.color.orange);
+        this.colorSpan = new ForegroundColorSpan(orange);
     }
 
+    /**
+     * Create UI with comment and image of commenter.
+     */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Holder holder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_comment, parent,
-                    false);
-            holder = new Holder();
-            holder.comment = ViewUtils.findViewById(convertView, R.id.comment);
-            convertView.setTag(holder);
-        } else {
-            holder = (Holder) convertView.getTag();
-        }
+    public CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(context).inflate(R.layout.item_comment, parent, false);
+        return new CommentViewHolder(view);
+    }
 
-        Comment comment = getItem(position);
-
-        // highlight any {@link Mentionable}s in the {@link Comment}s.
+    /**
+     * Display comment and commenter's image. Highlight any {@link Mentionable}s in the {@link Comment}s.
+     */
+    @Override
+    public void onBindViewHolder(CommentViewHolder holder, int position) {
+        final Comment comment = getItem(position);
         if(comment != null && StringUtils.isNotBlank(comment.getComment())) {
             holder.comment.setText(comment.getComment());
             highlightMentions(holder.comment, comment.getMentions());
         }
-
-        return convertView;
-
-
-      }
+    }
 
     /**
      * Highlights all the {@link Mentionable}s in the test {@link Comment}.
      */
-    private void highlightMentions(TextView commentTextView, List<Mentionable> mentions) {
+    private void highlightMentions(final TextView commentTextView, final List<Mentionable> mentions) {
         if(commentTextView != null && mentions != null && !mentions.isEmpty()) {
-
-            Spannable spannable = new SpannableString(commentTextView.getText());
+            final Spannable spannable = new SpannableString(commentTextView.getText());
 
             for (Mentionable mention: mentions) {
                 if (mention != null) {
-
-                    int start = mention.getMentionOffset();
-                    int end = start + mention.getMentionLength();
+                    final int start = mention.getMentionOffset();
+                    final int end = start + mention.getMentionLength();
 
                     if (commentTextView.length() >= end) {
-                        ForegroundColorSpan mentionColorSpan = new ForegroundColorSpan(context
-                                .getResources().getColor(R.color.orange));
-                        spannable.setSpan(mentionColorSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        spannable.setSpan(colorSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         commentTextView.setText(spannable, TextView.BufferType.SPANNABLE);
                     } else {
-                        //Something went wrong.  The expected text that we're trying to highlight
-                        // does not match the actual text at that position.
+                        //Something went wrong.  The expected text that we're trying to highlight does not
+                        // match the actual text at that position.
                         Log.w("Mentions Sample", "Mention lost. [" + mention + "]");
                     }
                 }
@@ -87,7 +88,16 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
         }
     }
 
-    public class Holder {
-        public TextView comment;
+    /**
+     * View holder for comment.
+     */
+    static class CommentViewHolder extends RecyclerView.ViewHolder {
+        public final TextView comment;
+
+        public CommentViewHolder(View itemView) {
+            super(itemView);
+            comment = ViewUtils.findViewById(itemView, R.id.comment);
+        }
     }
+
 }

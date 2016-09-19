@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,15 +8,19 @@
     android:orientation="horizontal"
     tools:ignore="RtlHardcoded">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/user_picture"
         android:layout_width="25dp"
-        android:layout_height="25dp"/>
+        android:layout_height="25dp"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        tools:src="@color/orange"/>
 
     <TextView
         android:id="@+id/user_full_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        tools:text="User name"/>
 
 </LinearLayout>

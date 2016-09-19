@@ -1,26 +1,13 @@
-#
-# CircleCI Configuration
-#
-
 machine:
-  environment:
-    CACHE_DIR: /home/ubuntu/cache
-    ANDROID_HOME: /home/ubuntu/cache/android-sdk-linux
-    GRADLE_HOME: /home/ubuntu/cache/gradle-2.6
-    GRADLE_OPTS: -Xmx512m
-
-general:
-  build_dir: Mentions
-
+  java:
+    version: oraclejdk8
+  python:
+    version: 2.7.10
 dependencies:
-  cache_directories:
-    - /home/ubuntu/cache
-    - /home/ubuntu/cache/android-sdk-linux
-    - /home/ubuntu/cache/gradle-2.6
-  override:
-    - ./test_scripts/setup_circle_ci.sh
-
+  pre:
+    - pip install codecov
 test:
   override:
-  - ./test_scripts/run_tests.sh:
-      timeout: 1800
+  - ./gradlew --info install test coverage
+  post:
+  - codecov

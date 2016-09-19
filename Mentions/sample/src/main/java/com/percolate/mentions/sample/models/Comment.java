@@ -7,6 +7,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.List;
 
+/**
+ * Comment object.
+ */
 public class Comment {
 
     private String comment;
