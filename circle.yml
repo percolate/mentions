@@ -19,6 +19,7 @@ dependencies:
     - /home/ubuntu/cache/gradle-2.14.1
   override:
     - ./test_scripts/setup-circle-ci.sh
+    - pip install codecov
 
 test:
   override:
