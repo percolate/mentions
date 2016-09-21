@@ -18,10 +18,10 @@ dependencies:
     - /home/ubuntu/cache/android-sdk-linux
     - /home/ubuntu/cache/gradle-2.14.1
   override:
-    - ./Mentions/test_scripts/setup-circle-ci.sh
+    - ./test_scripts/setup-circle-ci.sh
 
 test:
   override:
-  - ./Mentions/gradlew --info test coverage
+  - ./gradlew --info test coverage
   post:
   - codecov
