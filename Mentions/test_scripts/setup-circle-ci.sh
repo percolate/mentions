@@ -18,7 +18,7 @@ if [ ! -e $ANDROID_SDK_UPDATES_INSTALLED_TOUCH_FILE ]; then
   cp -r /usr/local/android-sdk-linux $CACHE_DIR &&
   echo y | android update sdk --no-ui -a --filter "android-24" &&
   echo y | android update sdk --no-ui -a --filter "tools" &&
-  echo y | android update sdk --no-ui -a --filter "build-tools-24.0.0" &&
+  echo y | android update sdk --no-ui -a --filter "build-tools-24.0.2" &&
   echo y | android update sdk --no-ui -a --filter "platform-tool" &&
   echo y | android update sdk --no-ui -a --filter "extra-android-m2repository" &&
   echo y | android update sdk --no-ui -a --filter "extra-android-support" &&
