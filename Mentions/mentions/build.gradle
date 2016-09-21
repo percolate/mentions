@@ -38,11 +38,7 @@ task coverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     executionData = files('build/jacoco/testDebugUnitTest.exec')
 
     reports {
-        //noinspection GroovyAssignabilityCheck
-        xml {
-            enabled = true
-            destination = "build/jacocoMentionsTests.xml"
-        }
+        xml.enabled = true
         html.enabled = false
     }
 }
