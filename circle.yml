@@ -9,6 +9,9 @@ machine:
   python:
       version: 2.7.10
 
+general:
+  build_dir: Mentions
+
 dependencies:
   cache_directories:
     - /home/ubuntu/cache
