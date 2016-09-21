@@ -3,9 +3,15 @@ machine:
     version: oraclejdk8
   python:
     version: 2.7.10
+
 dependencies:
-  pre:
-    - pip install codecov
+  cache_directories:
+    - /home/ubuntu/cache
+    - /home/ubuntu/cache/android-sdk-linux
+    - /home/ubuntu/cache/gradle-2.14.1
+  override:
+    - ./test_scripts/setup-circle-ci.sh
+
 test:
   override:
   - ./Mentions/gradlew --info test coverage
