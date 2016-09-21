@@ -1,8 +1,13 @@
 machine:
+  environment:
+    CACHE_DIR: /home/ubuntu/cache
+    ANDROID_HOME: /home/ubuntu/cache/android-sdk-linux
+    GRADLE_HOME: /home/ubuntu/cache/gradle-2.14.1
+    GRADLE_OPTS: -Xmx512m -XX:MaxPermSize=512m
   java:
     version: oraclejdk8
   python:
-    version: 2.7.10
+      version: 2.7.10
 
 dependencies:
   cache_directories:
