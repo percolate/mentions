@@ -22,6 +22,6 @@ dependencies:
 
 test:
   override:
-  - ./gradlew --info test coverage
+  - ./test_scripts/run_tests.sh
   post:
   - codecov
