@@ -1,14 +1,7 @@
 package com.percolate.mentions;
 
-import com.percolate.mentions.Mentionable;
-
 import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
-
-import java.util.List;
-import java.util.ArrayList;
-
-import static org.mockito.Mockito.*;
 
 /**
  * Utility methods commonly used throughout the Unit and UI tests.
@@ -16,7 +9,7 @@ import static org.mockito.Mockito.*;
 public class MentionTestUtils {
 
     /**
-     * Creates a mock mention with an offset and mention name. The lenght of the mention is
+     * Creates a mention object with an offset and mention name. The lenght of the mention is
      * length of the mention name.
 
      * @param offset        int     The starting location of the mention.
@@ -24,10 +17,10 @@ public class MentionTestUtils {
      * @return Mentionable          A mock mention.
      */
     public static Mentionable createMockMention(int offset, String mentionName) {
-        Mentionable mention = mock(Mentionable.class);
-        when(mention.getMentionOffset()).thenReturn(offset);
-        when(mention.getMentionName()).thenReturn(mentionName);
-        when(mention.getMentionLength()).thenReturn(mentionName.length());
+        final Mentionable mention = new Mention();
+        mention.setMentionOffset(offset);
+        mention.setMentionName(mentionName);
+        mention.setMentionLength(mentionName.length());
         return mention;
     }
 
@@ -49,8 +42,7 @@ public class MentionTestUtils {
      * @return ForegroundColorSpan[] An array of ForegroundColorSpan.
      */
     public static ForegroundColorSpan[] getForegroundColorSpans(EditText editText, int start, int end) {
-        ForegroundColorSpan[] highlightSpans = editText.getText().getSpans(start, start + end, ForegroundColorSpan.class);
-        return highlightSpans;
+        return editText.getText().getSpans(start, start + end, ForegroundColorSpan.class);
     }
 
 }

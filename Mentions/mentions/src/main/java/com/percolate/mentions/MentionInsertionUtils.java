@@ -19,10 +19,10 @@ import java.util.List;
  */
 class MentionInsertionUtils {
 
-    private EditText editText;
+    private final EditText editText;
 
     /*  An internal array that keeps track of all the mentions added to {@link EditText}. */
-    private List<Mentionable> mentions;
+    private final List<Mentionable> mentions;
 
     /* Text color of the mention in the {@link EditText}. The default color is orange. */
     private int textHighlightColor;
@@ -76,21 +76,20 @@ class MentionInsertionUtils {
      * @param mention Mentionable     A mention to display in {@link EditText}.
      */
     public void insertMention(Mentionable mention) {
-
         checkMentionable(mention);
         mention.setMentionLength(mention.getMentionName().length());
 
-        int cursorPosition = editText.getSelectionEnd();
-        String text = editText.getText().toString();
-        String toReplace = text.substring(0, cursorPosition);
-        int start = toReplace.lastIndexOf("@");
-        int newCursorPosition = start + mention.getMentionName().length() + 1;
+        final int cursorPosition = editText.getSelectionEnd();
+        final String text = editText.getText().toString();
+        final String toReplace = text.substring(0, cursorPosition);
+        final int start = toReplace.lastIndexOf("@");
+        final int newCursorPosition = start + mention.getMentionName().length() + 1;
 
         editText.getText().delete(start, cursorPosition);
         editText.getText().insert(start, mention.getMentionName() + " ");
 
         // Fix bug on LG G3 phone, where EditText messes up when using insert() method.
-        int originalInputType = editText.getInputType();
+        final int originalInputType = editText.getInputType();
         editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         editText.setInputType(originalInputType);
         editText.setSelection(newCursorPosition);
@@ -121,8 +120,8 @@ class MentionInsertionUtils {
      * @param mention Mentionable     A new mention that was inserted into {@link EditText}.
      * @param start   int             The offset of the new mention.
      */
-    protected void addMentionToInternalArray(Mentionable mention, int start) {
-        if (mention != null && mentions != null) {
+    protected void addMentionToInternalArray(final Mentionable mention, final int start) {
+        if (mention != null) {
             mention.setMentionOffset(start);
             mentions.add(mention);
         }
@@ -159,28 +158,26 @@ class MentionInsertionUtils {
      * @param count  int     The number of characters in the new text.
      */
     public void updateInternalMentionsArray(int start, int before, int count) {
-        if (mentions != null && !mentions.isEmpty()) {
+        if (!mentions.isEmpty()) {
             if (before != count) { // Text not changed if they ==.
                 for (Iterator<Mentionable> iterator = mentions.iterator(); iterator.hasNext(); ) {
-                    Mentionable mention = iterator.next();
-                    int mentionStart = mention.getMentionOffset();
-                    int mentionEnd = mentionStart + mention.getMentionLength();
+                    final Mentionable mention = iterator.next();
+                    final int mentionStart = mention.getMentionOffset();
+                    final int mentionEnd = mentionStart + mention.getMentionLength();
+                    final int editPos = start + count;
 
-                    //Editing text within mention - delete the mention
-                    int editPos = start + count;
-                    if (editPos > mentionStart + 1 && editPos < mentionEnd) {
+                    if (start <= mentionStart) {
+                        //Editing text before mention - change offset
+                        final int diff = count - before;
+                        mention.setMentionOffset(mentionStart + diff);
+                    } else if (editPos > mentionStart + 1 && editPos < mentionEnd) {
+                        //Editing text within mention - delete the mention
                         iterator.remove();
                     }
-
-                    //Editing text before mention - change offset
-                    if (start <= mentionStart) {
-                        int diff = count - before;
-                        mention.setMentionOffset(mentionStart + diff);
-                    }
                 }
+                highlightMentionsText();
             }
         }
-            highlightMentionsText();
     }
 
     /**
@@ -188,23 +185,21 @@ class MentionInsertionUtils {
      * is set at the starting and ending locations of the {@link Mentionable}s.
      */
     public void highlightMentionsText() {
-
         // Clear current highlighting (note: just using clearSpans(); makes EditText fields act
         // strange).
-        ForegroundColorSpan[] spans = editText.getEditableText().getSpans(0,
+        final ForegroundColorSpan[] spans = editText.getEditableText().getSpans(0,
                 editText.getText().length(), ForegroundColorSpan.class);
         for (ForegroundColorSpan span : spans) {
             editText.getEditableText().removeSpan(span);
         }
 
-        if (mentions != null && !mentions.isEmpty()) {
+        if (!mentions.isEmpty()) {
             for (Iterator<Mentionable> iterator = mentions.iterator(); iterator.hasNext(); ) {
-
-                Mentionable mention = iterator.next();
+                final Mentionable mention = iterator.next();
 
                 try {
-                    int start = mention.getMentionOffset();
-                    int end = start + mention.getMentionLength();
+                    final int start = mention.getMentionOffset();
+                    final int end = start + mention.getMentionLength();
                     if (editText.length() >= end && StringUtils.equals(editText.getText()
                             .subSequence(start, end), mention.getMentionName())) {
                         ForegroundColorSpan highlightSpan = new ForegroundColorSpan(
@@ -233,7 +228,7 @@ class MentionInsertionUtils {
      * @param mentions List<Mentionable>   List of pre-defined mentions in the {@link EditText}.
      * @return true or false
      */
-    public boolean textHasMentions(List<? extends Mentionable> mentions) {
+    public boolean textHasMentions(final List<? extends Mentionable> mentions) {
         if (editText != null && mentions != null && mentions.size() > 0) {
             for (Mentionable mention : mentions) {
                 int mentionStart = mention.getMentionOffset();

@@ -192,9 +192,8 @@ public class Mentions {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                System.out.println("charSequence = [" + charSequence + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
                 mentionInsertionUtils.updateInternalMentionsArray(start, before, count);
-                mentionInsertionUtils.highlightMentionsText();
-
             }
 
             @Override

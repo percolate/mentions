@@ -3,44 +3,41 @@ package com.percolate.mentions;
 import android.text.style.ForegroundColorSpan;
 import android.widget.EditText;
 
-import com.percolate.mentions.Mentionable;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.lang.IllegalArgumentException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-import dalvik.annotation.TestTarget;
-
+import static com.percolate.mentions.MentionTestUtils.createMockMention;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
-import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
-
 /**
  * Tests mention insertion and highlighting.
  */
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 public class MentionInsertionUITest {
 
-    // Mock EditText
+    /**
+     * {@link EditText}.
+     */
     private EditText editText;
 
-    // MentionInsertionUtils
+    /**
+     * {@link MentionInsertionUtils}.
+     */
     private MentionInsertionUtils mentionInsertionUtils;
 
     /**
-     * Use Robolectric to create a mock {@link EditText} view. Use the {@link EditText} to
-     * instaniate {@link MentionInsertionUtils}.
+     * Create {@link EditText} view. Use the {@link EditText} to instantiate
+     * {@link MentionInsertionUtils}.
      */
     @Before
     public void setUp() {
@@ -56,26 +53,25 @@ public class MentionInsertionUITest {
      */
     @Test
     public void testMentionInsertion() {
-
         // perform @ mention
         MentionTestUtils.setTextAndSelection(editText, "Hello @Br");
 
         // create mock mention
-        Mentionable mention = MentionTestUtils.createMockMention("Hello ".length(), "Brent Watson");
+        Mentionable mention = createMockMention("Hello ".length(), "Brent Watson");
 
         // insert mention into {@link EditText} view
         mentionInsertionUtils.insertMention(mention);
 
         // Test {@link EditText} has full mention name "Brent Watson"
-        assertEquals(editText.getText(), "Hello Brent Watson ");
+        assertEquals(editText.getText().toString(), "Hello Brent Watson ");
 
-        // Test mention is tracked intrenally {@link MentionInertionUtils}
+        // Test mention is tracked internally {@link MentionInertionUtils}
         assertNotNull(mentionInsertionUtils.getMentions());
         assertTrue("The mention \"Brent Watson\" was not inserted.",
                     mentionInsertionUtils.getMentions().size() == 1);
 
         // Test "Brent Watson" was highlighted
-        ForegroundColorSpan[] highlightSpans = editText.getEditableText().getSpans("Hello ".length(),
+        final ForegroundColorSpan[] highlightSpans = editText.getEditableText().getSpans("Hello ".length(),
                                             editText.getText().length(), ForegroundColorSpan.class);
         assertTrue("Did not highlight mention", highlightSpans.length == 1);
     }
@@ -102,14 +98,13 @@ public class MentionInsertionUITest {
      */
     @Test
     public void testPrepopulateMentions() {
-
-        // inesrt text with mentions "Brent Watson" and "Doug Tabuchi" into {@link EditText}.
+        // insert text with mentions "Brent Watson" and "Doug Tabuchi" into {@link EditText}.
         MentionTestUtils.setTextAndSelection(editText, "Hello Brent Watson and Doug Tabuchi");
 
         // create an array of mock mentions
         List<Mentionable> mentions = new ArrayList<>();
-        mentions.add(MentionTestUtils.createMockMention("Hello ".length(), "Brent Watson"));
-        mentions.add(MentionTestUtils.createMockMention("Hello Brent Watson and ".length(),
+        mentions.add(createMockMention("Hello ".length(), "Brent Watson"));
+        mentions.add(createMockMention("Hello Brent Watson and ".length(),
                                                                                    "Doug Tabuchi"));
 
         // add array of pre-existing mentions
@@ -127,18 +122,6 @@ public class MentionInsertionUITest {
         ForegroundColorSpan[] highlightSpans2 = MentionTestUtils.getForegroundColorSpans(editText,
                                        "Hello Brent Watson and ".length(), "Doug Tabuchi".length());
         assertTrue("The mention \"Doug Tabuchi\" was not highlighted.", highlightSpans2.length == 1);
-    }
-
-    /**
-     * Creates a mock mention with name "Brent Watson" at offset 6. The offset is 6, because we are
-     * inserting the string "Hello " before the mention.
-     */
-    private Mentionable createMockMention(int offset, String mentionName) {
-        Mentionable mention = mock(Mentionable.class);
-        when(mention.getMentionOffset()).thenReturn(offset);
-        when(mention.getMentionName()).thenReturn(mentionName);
-        when(mention.getMentionLength()).thenReturn(mentionName.length());
-        return mention;
     }
 
 }
