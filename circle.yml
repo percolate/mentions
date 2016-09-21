@@ -8,6 +8,6 @@ dependencies:
     - pip install codecov
 test:
   override:
-  - ./Mentions/gradlew --info clean mention:internalDebugUnitTest coverage
+  - ./Mentions/gradlew --info mention:internalDebugUnitTest coverage
   post:
   - codecov
