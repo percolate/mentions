@@ -14,25 +14,38 @@ import java.util.List;
  * query listener or add mentions. Pass in an {@link EditText} view to the builder and the library
  * will setup the ability to '@' mention.
  */
+@SuppressWarnings("WeakerAccess")
 public class Mentions {
 
-    // Context
-    private Context context;
+    /**
+     * {@link Context}.
+     */
+    protected final Context context;
 
-    // EditText to setup @ mentions
-    private EditText editText;
+    /**
+     * {@link EditText} to setup @ mentions.
+     */
+    protected final EditText editText;
 
-    // QueryListener to notify client of queries determined to be valid by {@link MentionCheckerUtils}
-    private QueryListener queryListener;
+    /**
+     * Notifies client of queries determined to be valid by {@link MentionCheckerUtils}.
+     */
+    protected QueryListener queryListener;
 
-    // SuggestionListener to notify client when to display and hide a suggestions drop down
-    private SuggestionsListener suggestionsListener;
+    /**
+     * Notifies client when to display and hide a suggestions drop down.
+     */
+    protected SuggestionsListener suggestionsListener;
 
-    // Helper class that determines whether a query after @ is valid or not.
-    private MentionCheckerUtils mentionCheckerUtils;
+    /**
+     * Helper class that determines whether a query after @ is valid or not.
+     */
+    protected MentionCheckerUtils mentionCheckerUtils;
 
-    // Helper class for inserting and highlighting mentions.
-    private MentionInsertionUtils mentionInsertionUtils;
+    /**
+     * Helper class for inserting and highlighting mentions.
+     */
+    protected MentionInsertionUtils mentionInsertionUtils;
 
     /**
      * Pass in your {@link EditText} to give it the ability to @ mention.
@@ -40,7 +53,7 @@ public class Mentions {
      * @param context   Context     Although not used in the library, it passed for future use.
      * @param editText  EditText    The EditText that will have @ mention capability.
      */
-    private Mentions(Context context, EditText editText) {
+    private Mentions(final Context context, final EditText editText) {
         this.context = context;
         this.editText = editText;
 
@@ -55,8 +68,10 @@ public class Mentions {
      */
     public static class Builder {
 
-        // Mentions instance
-        private Mentions mentionsLib;
+        /**
+         * Mention instance.
+         */
+        private final Mentions mentionsLib;
 
         /**
          * Builder which allows you configure mentions. A {@link Context} and {@link EditText} is
@@ -65,9 +80,8 @@ public class Mentions {
          * @param context   Context     Context
          * @param editText  EditText    The {@link EditText} view to which you want to add the
          *                              ability to mention.
-         *
          */
-        public Builder(Context context, EditText editText) {
+        public Builder(final Context context, final EditText editText) {
             if (context == null) {
                 throw new IllegalArgumentException("Context must not be null.");
             } else if (editText == null) {
@@ -83,7 +97,7 @@ public class Mentions {
          * @param mentions  List<Mentionable>   An array of {@link Mentionable}s that are
          *                                      currently in the {@link EditText}.
          */
-        public Builder addMentions(List<? extends Mentionable> mentions) {
+        public Builder addMentions(final List<? extends Mentionable> mentions) {
             mentionsLib.mentionInsertionUtils.addMentions(mentions);
             return this;
         }
@@ -93,7 +107,7 @@ public class Mentions {
          *
          * @param color     int     The color to use to highlight a {@link Mentionable}'s text.
          */
-        public Builder highlightColor(int color) {
+        public Builder highlightColor(final int color) {
             mentionsLib.mentionInsertionUtils.setTextHighlightColor(color);
             return this;
         }
@@ -105,7 +119,7 @@ public class Mentions {
          * @param maxCharacters     int     The number of characters within which anything typed
          *                                  after the '@' symbol will be evaluated.
          */
-        public Builder maxCharacters(int maxCharacters) {
+        public Builder maxCharacters(final int maxCharacters) {
             mentionsLib.mentionCheckerUtils.setMaxCharacters(maxCharacters);
             return this;
         }
@@ -116,7 +130,7 @@ public class Mentions {
          * @param queryListener     QueryListener   The listener to set to be notified of a valid
          *                                          query.
          */
-        public Builder queryListener(QueryListener queryListener) {
+        public Builder queryListener(final QueryListener queryListener) {
             mentionsLib.queryListener = queryListener;
             return this;
         }
@@ -128,7 +142,7 @@ public class Mentions {
          * @param suggestionsListener   SuggestionsListener     The listener for display
          *                                                      suggestions.
          */
-        public Builder suggestionsListener(SuggestionsListener suggestionsListener) {
+        public Builder suggestionsListener(final SuggestionsListener suggestionsListener) {
             mentionsLib.suggestionsListener = suggestionsListener;
             return this;
         }
@@ -151,7 +165,7 @@ public class Mentions {
      * @param mentionables  List<? extends Mentionable>  Any pre-existing mentions that you
      *                                                   want to add to the library.
      */
-    public void addMentions(List<? extends Mentionable> mentionables) {
+    public void addMentions(final List<? extends Mentionable> mentionables) {
         mentionInsertionUtils.addMentions(mentionables);
     }
 
@@ -192,7 +206,6 @@ public class Mentions {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                System.out.println("charSequence = [" + charSequence + "], start = [" + start + "], before = [" + before + "], count = [" + count + "]");
                 mentionInsertionUtils.updateInternalMentionsArray(start, before, count);
             }
 
@@ -211,7 +224,7 @@ public class Mentions {
      * @param mentionable   Mentionable     A {@link Mentionable} chosen by the user to display
      *                                      and highlight in the {@link EditText}.
      */
-    public void insertMention(Mentionable mentionable) {
+    public void insertMention(final Mentionable mentionable) {
         mentionInsertionUtils.insertMention(mentionable);
         suggestionsListener.displaySuggestions(false);
     }
@@ -222,7 +235,7 @@ public class Mentions {
      *
      * @param query     String      A valid query.
      */
-    public void queryReceived(String query) {
+    public void queryReceived(final String query) {
         if (queryListener != null && StringUtils.isNotBlank(query)) {
             queryListener.onQueryReceived(query);
         } else {

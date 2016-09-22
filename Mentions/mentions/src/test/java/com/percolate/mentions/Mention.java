@@ -3,7 +3,7 @@ package com.percolate.mentions;
 /**
  * Used for testing inserting, deletion and highlighting of mentions.
  */
-public class Mention implements Mentionable {
+class Mention implements Mentionable {
 
     private String mentionName;
 

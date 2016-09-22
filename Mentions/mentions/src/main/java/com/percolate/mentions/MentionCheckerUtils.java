@@ -7,12 +7,13 @@ import android.widget.EditText;
  */
 class MentionCheckerUtils {
 
-    private EditText editText;
+    private final EditText editText;
 
     /* Default limit of 13 characters to evaluate after the '@' symbol. */
-    private int maxCharacters = 13;
+    @SuppressWarnings("WeakerAccess")
+    protected int maxCharacters = 13;
 
-    public MentionCheckerUtils(EditText editText) {
+    MentionCheckerUtils(final EditText editText) {
         this.editText = editText;
     }
 
@@ -24,7 +25,7 @@ class MentionCheckerUtils {
      * @param maxCharacters int     The maximum number of characters to considered after the
      *                      '@' symbol as a query. The default is 13 characters.
      */
-    public void setMaxCharacters(int maxCharacters) {
+    void setMaxCharacters(final int maxCharacters) {
         if (maxCharacters <= 0) {
             throw new IllegalArgumentException("Maximum number of characters must be greater " +
                                                "than 0.");
@@ -42,18 +43,14 @@ class MentionCheckerUtils {
      *
      * @return String   A valid query that satisfies the three rules above.
      */
-    public String doMentionCheck() {
-
+    String doMentionCheck() {
         String queryToken = "";
 
         // perform a search if the {@link EditText} has an '@' symbol.
         if (StringUtils.contains(editText.getText(), "@")) {
-
-            int cursorPosition = editText.getSelectionStart();
-
-            String allTextBeforeCursor = editText.getText().toString().substring(0, cursorPosition);
-
-            String providedSearchText = StringUtils.substringAfterLast(allTextBeforeCursor, "@");
+            final int cursorPosition = editText.getSelectionStart();
+            final String allTextBeforeCursor = editText.getText().toString().substring(0, cursorPosition);
+            final String providedSearchText = StringUtils.substringAfterLast(allTextBeforeCursor, "@");
 
             // check search text is within <code>maxCharacters</code> and begins with a
             // alpha numeric char.
@@ -86,9 +83,9 @@ class MentionCheckerUtils {
      *                                {@link EditText}.
      * @return true or false
      */
-    private boolean spaceBeforeAtSymbol(String currentTextBeforeCursor, int atSymbolPosition) {
+    private boolean spaceBeforeAtSymbol(final String currentTextBeforeCursor, final int atSymbolPosition) {
         if (atSymbolPosition > 0) {
-            char charBeforeAtSymbol = currentTextBeforeCursor.charAt(atSymbolPosition - 1);
+            final char charBeforeAtSymbol = currentTextBeforeCursor.charAt(atSymbolPosition - 1);
             if (Character.isWhitespace(charBeforeAtSymbol)) {
                 return true;
             }
@@ -105,7 +102,7 @@ class MentionCheckerUtils {
      *                           value is configurable.
      * @return true or false
      */
-    private boolean searchIsWithinMaxChars(String providedSearchText, int maxCharacters) {
+    private boolean searchIsWithinMaxChars(final String providedSearchText, final int maxCharacters) {
         return (providedSearchText.length() >= 1 && providedSearchText.length() <= maxCharacters);
     }
 
@@ -115,7 +112,7 @@ class MentionCheckerUtils {
      * @param providedSearchText String  The text after the '@' symbol entered by the user.
      * @return true or false
      */
-    private boolean searchBeginsWithAlphaNumericChar(String providedSearchText) {
+    private boolean searchBeginsWithAlphaNumericChar(final String providedSearchText) {
         return Character.isLetterOrDigit(providedSearchText.charAt(0));
     }
 
@@ -125,10 +122,9 @@ class MentionCheckerUtils {
      *
      * @return true or false
      */
-    public boolean currentWordStartsWithAtSign() {
-
-        int start = editText.getSelectionStart();
-        int end = editText.getSelectionEnd();
+    boolean currentWordStartsWithAtSign() {
+        final int start = editText.getSelectionStart();
+        final int end = editText.getSelectionEnd();
 
         if (start == end) {
             //Multiple text is not highlighted
