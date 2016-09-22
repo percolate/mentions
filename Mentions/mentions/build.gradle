@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply plugin: 'jacoco'
 
 android {
@@ -22,6 +23,9 @@ android {
                 includeNoLocationClasses = true
             }
         }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -58,4 +62,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.1.2"
     testCompile 'org.mockito:mockito-core:2.1.0-RC.1'
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    //Prevents class not found exception https://github.com/robolectric/robolectric/issues/1932
+    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
+}
+repositories {
+    mavenCentral()
 }

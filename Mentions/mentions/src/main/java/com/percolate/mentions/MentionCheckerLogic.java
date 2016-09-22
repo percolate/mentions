@@ -5,7 +5,7 @@ import android.widget.EditText;
 /**
  * Contains helper methods to determine if a search is valid.
  */
-class MentionCheckerUtils {
+class MentionCheckerLogic {
 
     private final EditText editText;
 
@@ -13,7 +13,7 @@ class MentionCheckerUtils {
     @SuppressWarnings("WeakerAccess")
     protected int maxCharacters = 13;
 
-    MentionCheckerUtils(final EditText editText) {
+    MentionCheckerLogic(final EditText editText) {
         this.editText = editText;
     }
 

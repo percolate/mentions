@@ -17,7 +17,7 @@ import java.util.List;
  * values are updated as text is edited in the {@link EditText}. The default text highlight color
  * is orange and it is configurable.
  */
-class MentionInsertionUtils {
+class MentionInsertionLogic {
 
     private final EditText editText;
 
@@ -32,7 +32,7 @@ class MentionInsertionUtils {
     @SuppressWarnings("WeakerAccess")
     protected int textHighlightColor;
 
-    MentionInsertionUtils(EditText editText) {
+    MentionInsertionLogic(EditText editText) {
         this.editText = editText;
         this.mentions = new ArrayList<>();
         this.textHighlightColor = R.color.orange;
@@ -40,7 +40,7 @@ class MentionInsertionUtils {
 
     /**
      * Returns all the {@link Mentionable}s added to the {@link EditText} by invoking
-     * <code>MentionInsertionUtils#insertMention</code>.
+     * <code>MentionInsertionLogic#insertMention</code>.
      *
      * @return List<Mentionable>    All the {@link Mentionable}s added to edit {@link EditText}.
      */

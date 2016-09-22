@@ -28,7 +28,7 @@ public class Mentions {
     protected final EditText editText;
 
     /**
-     * Notifies client of queries determined to be valid by {@link MentionCheckerUtils}.
+     * Notifies client of queries determined to be valid by {@link MentionCheckerLogic}.
      */
     protected QueryListener queryListener;
 
@@ -40,12 +40,12 @@ public class Mentions {
     /**
      * Helper class that determines whether a query after @ is valid or not.
      */
-    protected MentionCheckerUtils mentionCheckerUtils;
+    protected MentionCheckerLogic mentionCheckerLogic;
 
     /**
      * Helper class for inserting and highlighting mentions.
      */
-    protected MentionInsertionUtils mentionInsertionUtils;
+    protected MentionInsertionLogic mentionInsertionLogic;
 
     /**
      * Pass in your {@link EditText} to give it the ability to @ mention.
@@ -58,8 +58,8 @@ public class Mentions {
         this.editText = editText;
 
         // instantiate helper classes
-        this.mentionCheckerUtils = new MentionCheckerUtils(editText);
-        this.mentionInsertionUtils = new MentionInsertionUtils(editText);
+        this.mentionCheckerLogic = new MentionCheckerLogic(editText);
+        this.mentionInsertionLogic = new MentionInsertionLogic(editText);
     }
 
     /**
@@ -98,7 +98,7 @@ public class Mentions {
          *                                      currently in the {@link EditText}.
          */
         public Builder addMentions(final List<? extends Mentionable> mentions) {
-            mentionsLib.mentionInsertionUtils.addMentions(mentions);
+            mentionsLib.mentionInsertionLogic.addMentions(mentions);
             return this;
         }
 
@@ -108,7 +108,7 @@ public class Mentions {
          * @param color     int     The color to use to highlight a {@link Mentionable}'s text.
          */
         public Builder highlightColor(final int color) {
-            mentionsLib.mentionInsertionUtils.setTextHighlightColor(color);
+            mentionsLib.mentionInsertionLogic.setTextHighlightColor(color);
             return this;
         }
 
@@ -120,7 +120,7 @@ public class Mentions {
          *                                  after the '@' symbol will be evaluated.
          */
         public Builder maxCharacters(final int maxCharacters) {
-            mentionsLib.mentionCheckerUtils.setMaxCharacters(maxCharacters);
+            mentionsLib.mentionCheckerLogic.setMaxCharacters(maxCharacters);
             return this;
         }
 
@@ -166,7 +166,7 @@ public class Mentions {
      *                                                   want to add to the library.
      */
     public void addMentions(final List<? extends Mentionable> mentionables) {
-        mentionInsertionUtils.addMentions(mentionables);
+        mentionInsertionLogic.addMentions(mentionables);
     }
 
     /**
@@ -175,7 +175,7 @@ public class Mentions {
      * @return List<Mentionable>    An array containing all the inserted {@link Mentionable}s.
      */
     public List<Mentionable> getInsertedMentions() {
-        return new ArrayList<>(mentionInsertionUtils.getMentions());
+        return new ArrayList<>(mentionInsertionLogic.getMentions());
     }
 
     /**
@@ -185,8 +185,8 @@ public class Mentions {
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mentionCheckerUtils.currentWordStartsWithAtSign()) {
-                    mentionCheckerUtils.doMentionCheck();
+                if (mentionCheckerLogic.currentWordStartsWithAtSign()) {
+                    mentionCheckerLogic.doMentionCheck();
                 }
             }
         });
@@ -200,18 +200,18 @@ public class Mentions {
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-                mentionInsertionUtils.checkIfProgrammaticallyClearedEditText(charSequence, start,
+                mentionInsertionLogic.checkIfProgrammaticallyClearedEditText(charSequence, start,
                         count, after);
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                mentionInsertionUtils.updateInternalMentionsArray(start, before, count);
+                mentionInsertionLogic.updateInternalMentionsArray(start, before, count);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String query = mentionCheckerUtils.doMentionCheck();
+                String query = mentionCheckerLogic.doMentionCheck();
                 queryReceived(query);
             }
         });
@@ -225,7 +225,7 @@ public class Mentions {
      *                                      and highlight in the {@link EditText}.
      */
     public void insertMention(final Mentionable mentionable) {
-        mentionInsertionUtils.insertMention(mentionable);
+        mentionInsertionLogic.insertMention(mentionable);
         suggestionsListener.displaySuggestions(false);
     }
 
