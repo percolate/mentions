@@ -12,34 +12,41 @@ android {
         versionName "1.0"
     }
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
         debug {
-            testCoverageEnabled true
+            testCoverageEnabled false
+        }
+    }
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
         }
     }
 }
 
-task coverage(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+jacoco {
+    version = '0.7.6.201602180812'
+}
+
+task coverage(type:JacocoReport, dependsOn: "testDebugUnitTest") {
     group = "Reporting"
-    description = 'Create code coverage report for mentions library.'
+    description = 'Create code coverage report for library.'
 
     classDirectories = fileTree(
-            dir: './build/intermediates/classes/debug',
-            excludes: ['com/percolate/mentions/R*.class',
-                       'com/percolate/mentions/BuildConfig.class',
-                       'com/percolate/mentions/CharSequenceUtils.class',
-                       'com/percolate/mentions/StringUtils.class'
-            ]
+            dir: "$buildDir/intermediates/classes/debug",
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
     )
-    sourceDirectories = files(['src/main/java'])
-    executionData = files('build/jacoco/testDebugUnitTest.exec')
+
+    sourceDirectories = files("src/main/java")
+    executionData = files("build/jacoco/testDebugUnitTest.exec")
 
     reports {
+        //noinspection GroovyAssignabilityCheck
         xml.enabled = true
-        html.enabled = false
     }
 }
 

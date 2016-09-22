@@ -6,7 +6,7 @@ import android.widget.EditText;
 /**
  * Utility methods commonly used throughout the Unit and UI tests.
  */
-public class MentionTestUtils {
+class MentionTestUtils {
 
     /**
      * Creates a mention object with an offset and mention name. The lenght of the mention is
