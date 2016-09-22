@@ -38,7 +38,8 @@ task coverage(type:JacocoReport, dependsOn: "testDebugUnitTest") {
             excludes: ['**/R.class',
                        '**/R$*.class',
                        '**/BuildConfig.*',
-                       '**/Manifest*.*']
+                       'com/percolate/mentions/CharSequenceUtils.class',
+                       'com/percolate/mentions/StringUtils.class']
     )
 
     sourceDirectories = files("src/main/java")
