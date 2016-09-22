@@ -16,7 +16,7 @@ class MentionTestUtils {
      * @param mentionName   String  The name of the mention to display in the {@link EditText} view.
      * @return Mentionable          A mock mention.
      */
-    public static Mentionable createMockMention(int offset, String mentionName) {
+    static Mentionable createMockMention(int offset, String mentionName) {
         final Mentionable mention = new Mention();
         mention.setMentionOffset(offset);
         mention.setMentionName(mentionName);
@@ -28,7 +28,7 @@ class MentionTestUtils {
      * Set text and selection in {@link EditText} view.
      * @param text  String   The text to insert into the {@link EditText} view.
      */
-    public static void setTextAndSelection(EditText editText, String text) {
+    static void setTextAndSelection(EditText editText, String text) {
         editText.setText(text);
         editText.setSelection(text != null ? text.length() : 0);
     }
@@ -41,7 +41,7 @@ class MentionTestUtils {
      * @param end       int         The ending location to search for ForegroundColorSpans.
      * @return ForegroundColorSpan[] An array of ForegroundColorSpan.
      */
-    public static ForegroundColorSpan[] getForegroundColorSpans(EditText editText, int start, int end) {
+    static ForegroundColorSpan[] getForegroundColorSpans(EditText editText, int start, int end) {
         return editText.getText().getSpans(start, start + end, ForegroundColorSpan.class);
     }
 

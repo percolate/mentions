@@ -4,4 +4,4 @@
 #
 
 printf "Running tests\n"
-$GRADLE_HOME/bin/gradle --continue coverage
+$GRADLE_HOME/bin/gradle coverage
