@@ -87,19 +87,21 @@ class MentionInsertionLogic {
         final String text = editText.getText().toString();
         final String toReplace = text.substring(0, cursorPosition);
         final int start = toReplace.lastIndexOf("@");
-        final int newCursorPosition = start + mention.getMentionName().length() + 1;
 
-        editText.getText().delete(start, cursorPosition);
-        editText.getText().insert(start, mention.getMentionName() + " ");
+        if (start != -1) {
+            final int newCursorPosition = start + mention.getMentionName().length() + 1;
+            editText.getText().delete(start, cursorPosition);
+            editText.getText().insert(start, mention.getMentionName() + " ");
 
-        // Fix bug on LG G3 phone, where EditText messes up when using insert() method.
-        final int originalInputType = editText.getInputType();
-        editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        editText.setInputType(originalInputType);
-        editText.setSelection(newCursorPosition);
+            // Fix bug on LG G3 phone, where EditText messes up when using insert() method.
+            final int originalInputType = editText.getInputType();
+            editText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            editText.setInputType(originalInputType);
+            editText.setSelection(newCursorPosition);
 
-        addMentionToInternalArray(mention, start);
-        highlightMentionsText();
+            addMentionToInternalArray(mention, start);
+            highlightMentionsText();
+        }
     }
 
     /**
