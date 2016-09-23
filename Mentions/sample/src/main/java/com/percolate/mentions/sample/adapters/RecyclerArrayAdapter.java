@@ -15,7 +15,7 @@ public abstract class RecyclerArrayAdapter<M, VH extends RecyclerView.ViewHolder
 
   private final ArrayList<M> items = new ArrayList<M>();
 
-  public RecyclerArrayAdapter() {
+  RecyclerArrayAdapter() {
     setHasStableIds(true);
   }
 

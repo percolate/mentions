@@ -17,7 +17,7 @@ import org.robolectric.annotation.Config
 @SuppressLint("SetTextI18n")
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class, sdk = intArrayOf(23))
-class MentionEditingUnitTest {
+class MentionEditingLogicTest {
 
     /**
      * Test replacement text.
@@ -113,7 +113,7 @@ class MentionEditingUnitTest {
     @Test
     fun testMentionOffsetUpdate() {
         editText.setText("Hello TestBrent Watson")
-        mentionInsertionLogic.updateInternalMentionsArray(6, 0, TEST_STRING.length)
+        mentionInsertionLogic.updateInternalMentionsArray("Hello ".length, 0, TEST_STRING.length)
 
         val mentions = mentionInsertionLogic.mentions
         assertNotNull(mentions)

@@ -79,7 +79,7 @@ class MentionInsertionLogic {
      *
      * @param mention Mentionable     A mention to display in {@link EditText}.
      */
-     void insertMention(Mentionable mention) {
+     void insertMention(final Mentionable mention) {
         checkMentionable(mention);
         mention.setMentionLength(mention.getMentionName().length());
 
@@ -161,7 +161,7 @@ class MentionInsertionLogic {
      * @param before int     Length of old text.
      * @param count  int     The number of characters in the new text.
      */
-     void updateInternalMentionsArray(int start, int before, int count) {
+     void updateInternalMentionsArray(final int start, final int before, final int count) {
         if (!mentions.isEmpty()) {
             if (before != count) { // Text not changed if they ==.
                 for (Iterator<Mentionable> iterator = mentions.iterator(); iterator.hasNext(); ) {
@@ -188,7 +188,7 @@ class MentionInsertionLogic {
      * Highlight all the {@link Mentionable}s in the {@link EditText}. A {@link ForegroundColorSpan}
      * is set at the starting and ending locations of the {@link Mentionable}s.
      */
-    private void highlightMentionsText() {
+    protected void highlightMentionsText() {
         // Clear current highlighting (note: just using clearSpans(); makes EditText fields act
         // strange).
         final ForegroundColorSpan[] spans = editText.getEditableText().getSpans(0,

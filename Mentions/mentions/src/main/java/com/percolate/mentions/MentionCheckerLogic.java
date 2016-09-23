@@ -57,15 +57,13 @@ class MentionCheckerLogic {
             if (searchIsWithinMaxChars(providedSearchText, maxCharacters)
                     && searchBeginsWithAlphaNumericChar(providedSearchText)) {
 
-                int atSymbolPosition = StringUtils.lastIndexOf(allTextBeforeCursor, "@");
+                final int atSymbolPosition = StringUtils.lastIndexOf(allTextBeforeCursor, "@");
 
                 // check if search text is first in the view or has a space beforehand if there are
                 // more characters in the view.
                 if (atSymbolPosition == 0
                         || spaceBeforeAtSymbol(allTextBeforeCursor, atSymbolPosition)) {
-
                     queryToken = providedSearchText;
-
                 }
             }
         }

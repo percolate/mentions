@@ -16,7 +16,7 @@ class CharSequenceUtils {
      * @param start the start index
      * @return the index where the search sequence was found
      */
-    public static int indexOf(final CharSequence cs, final CharSequence searchChar, final int start) {
+    static int indexOf(final CharSequence cs, final CharSequence searchChar, final int start) {
         return cs.toString().indexOf(searchChar.toString(), start);
     }
 

@@ -3,7 +3,6 @@
     <color name="orange">#f16421</color>
     <color name="orange_faded">#80f16421</color>
     <color name="transparent">@android:color/transparent</color>
-    <color name="transparent_black">#33000000</color>
     <color name="grey_light">#f3f3f3</color>
     <color name="grey">#999999</color>
 </resources>

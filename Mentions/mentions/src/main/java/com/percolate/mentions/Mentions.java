@@ -40,12 +40,12 @@ public class Mentions {
     /**
      * Helper class that determines whether a query after @ is valid or not.
      */
-    protected MentionCheckerLogic mentionCheckerLogic;
+    protected final MentionCheckerLogic mentionCheckerLogic;
 
     /**
      * Helper class for inserting and highlighting mentions.
      */
-    protected MentionInsertionLogic mentionInsertionLogic;
+    protected final MentionInsertionLogic mentionInsertionLogic;
 
     /**
      * Pass in your {@link EditText} to give it the ability to @ mention.

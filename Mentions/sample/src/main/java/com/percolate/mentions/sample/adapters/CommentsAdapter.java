@@ -29,17 +29,16 @@ public class CommentsAdapter extends RecyclerArrayAdapter<Comment, CommentsAdapt
     /**
      * {@link Context}.
      */
-    private Context context;
+    private final Context context;
 
     /**
-     * {@link ForegroundColorSpan}.
+     * Orange color.
      */
-    private ForegroundColorSpan colorSpan;
+    private final int orange;
 
     public CommentsAdapter(final Context context) {
         this.context = context;
-        final int orange = ContextCompat.getColor(context, R.color.orange);
-        this.colorSpan = new ForegroundColorSpan(orange);
+        this.orange = ContextCompat.getColor(context, R.color.orange);
     }
 
     /**
@@ -76,7 +75,7 @@ public class CommentsAdapter extends RecyclerArrayAdapter<Comment, CommentsAdapt
                     final int end = start + mention.getMentionLength();
 
                     if (commentTextView.length() >= end) {
-                        spannable.setSpan(colorSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        spannable.setSpan(new ForegroundColorSpan(orange), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                         commentTextView.setText(spannable, TextView.BufferType.SPANNABLE);
                     } else {
                         //Something went wrong.  The expected text that we're trying to highlight does not
@@ -92,9 +91,9 @@ public class CommentsAdapter extends RecyclerArrayAdapter<Comment, CommentsAdapt
      * View holder for comment.
      */
     static class CommentViewHolder extends RecyclerView.ViewHolder {
-        public final TextView comment;
+        final TextView comment;
 
-        public CommentViewHolder(View itemView) {
+        CommentViewHolder(View itemView) {
             super(itemView);
             comment = ViewUtils.findViewById(itemView, R.id.comment);
         }

@@ -11,13 +11,13 @@ class StringUtils {
     /**
      * The empty String {@code ""}.
      */
-    public static final String EMPTY = "";
+    private static final String EMPTY = "";
 
     /**
      * Represents a failed index search.
      * @since 2.1
      */
-    public static final int INDEX_NOT_FOUND = -1;
+    private static final int INDEX_NOT_FOUND = -1;
 
     /**
      * <p>Checks if a CharSequence is not empty (""), not null and not whitespace only.</p>
@@ -36,7 +36,7 @@ class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from isNotBlank(String) to isNotBlank(CharSequence)
      */
-    public static boolean isNotBlank(final CharSequence cs) {
+    static boolean isNotBlank(final CharSequence cs) {
         return !isBlank(cs);
     }
 
@@ -56,7 +56,7 @@ class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from isBlank(String) to isBlank(CharSequence)
      */
-    public static boolean isBlank(final CharSequence cs) {
+    static boolean isBlank(final CharSequence cs) {
         int strLen;
         if (cs == null || (strLen = cs.length()) == 0) {
             return true;
@@ -90,7 +90,7 @@ class StringUtils {
      * @return {@code true} if the CharSequences are equal (case-sensitive), or both {@code null}
      * @since 3.0 Changed signature from equals(String, String) to equals(CharSequence, CharSequence)
      */
-    public static boolean equals(final CharSequence cs1, final CharSequence cs2) {
+    static boolean equals(final CharSequence cs1, final CharSequence cs2) {
         if (cs1 == cs2) {
             return true;
         }
@@ -114,8 +114,8 @@ class StringUtils {
      * @param length character length of the region
      * @return whether the region matched
      */
-    public static boolean regionMatches(final CharSequence cs, final boolean ignoreCase, final int thisStart,
-                                 final CharSequence substring, final int start, final int length)    {
+    private static boolean regionMatches(final CharSequence cs, final boolean ignoreCase, final int thisStart,
+                                         final CharSequence substring, final int start, final int length)    {
         if (cs instanceof String && substring instanceof String) {
             return ((String) cs).regionMatches(ignoreCase, thisStart, (String) substring, start, length);
         }
@@ -180,7 +180,7 @@ class StringUtils {
      * @return substring from start position to end position,
      *  {@code null} if null String input
      */
-    public static String substring(final String str, int start, int end) {
+    static String substring(final String str, int start, int end) {
         if (str == null) {
             return null;
         }
@@ -235,7 +235,7 @@ class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from contains(String, String) to contains(CharSequence, CharSequence)
      */
-    public static boolean contains(final CharSequence seq, final CharSequence searchSeq) {
+    static boolean contains(final CharSequence seq, final CharSequence searchSeq) {
         if (seq == null || searchSeq == null) {
             return false;
         }
@@ -271,7 +271,7 @@ class StringUtils {
      *  {@code null} if null String input
      * @since 2.0
      */
-    public static String substringAfterLast(final String str, final String separator) {
+    static String substringAfterLast(final String str, final String separator) {
         if (isEmpty(str)) {
             return str;
         }
@@ -304,7 +304,7 @@ class StringUtils {
      * @return {@code true} if the CharSequence is empty or null
      * @since 3.0 Changed signature from isEmpty(String) to isEmpty(CharSequence)
      */
-    public static boolean isEmpty(final CharSequence cs) {
+    private static boolean isEmpty(final CharSequence cs) {
         return cs == null || cs.length() == 0;
     }
 
@@ -331,7 +331,7 @@ class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from lastIndexOf(String, String) to lastIndexOf(CharSequence, CharSequence)
      */
-    public static int lastIndexOf(final CharSequence seq, final CharSequence searchSeq) {
+    static int lastIndexOf(final CharSequence seq, final CharSequence searchSeq) {
         if (seq == null || searchSeq == null) {
             return INDEX_NOT_FOUND;
         }
@@ -360,7 +360,7 @@ class StringUtils {
      * @since 2.4
      * @since 3.0 Changed signature from startsWith(String, String) to startsWith(CharSequence, CharSequence)
      */
-    public static boolean startsWith(final CharSequence str, final CharSequence prefix) {
+    static boolean startsWith(final CharSequence str, final CharSequence prefix) {
         return startsWith(str, prefix, false);
     }
 

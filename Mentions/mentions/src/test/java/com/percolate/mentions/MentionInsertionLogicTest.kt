@@ -17,7 +17,7 @@ import java.util.*
  */
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class, sdk = intArrayOf(23))
-class MentionInsertionUITest {
+class MentionInsertionLogicTest {
 
     /**
      * [EditText].

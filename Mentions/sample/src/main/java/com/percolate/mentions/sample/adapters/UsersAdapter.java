@@ -39,12 +39,11 @@ public class UsersAdapter extends RecyclerArrayAdapter<User, UsersAdapter.UserVi
     /**
      * {@link ForegroundColorSpan}.
      */
-    private ForegroundColorSpan colorSpan;
+    private final ForegroundColorSpan colorSpan;
 
     public UsersAdapter(final Context context) {
         this.context = context;
         final int orange = ContextCompat.getColor(context, R.color.orange);
-        final int transparentBlack = ContextCompat.getColor(context, R.color.transparent_black);
         this.colorSpan = new ForegroundColorSpan(orange);
     }
 
@@ -90,7 +89,7 @@ public class UsersAdapter extends RecyclerArrayAdapter<User, UsersAdapter.UserVi
     /**
      * Highlights the current search text in the mentions list.
      */
-    public void highlightSearchQueryInUserName(CharSequence userName) {
+    private void highlightSearchQueryInUserName(CharSequence userName) {
         if (StringUtils.isNotBlank(currentQuery)) {
             int searchQueryLocation = userName.toString().toLowerCase(Locale.US).indexOf(currentQuery);
 
@@ -109,10 +108,10 @@ public class UsersAdapter extends RecyclerArrayAdapter<User, UsersAdapter.UserVi
      * View holder for user.
      */
     static class UserViewHolder extends RecyclerView.ViewHolder {
-        public final TextView name;
-        public final ImageView imageView;
+        final TextView name;
+        final ImageView imageView;
 
-        public UserViewHolder(View itemView) {
+        UserViewHolder(View itemView) {
             super(itemView);
             name = ViewUtils.findViewById(itemView, R.id.user_full_name);
             imageView = ViewUtils.findViewById(itemView, R.id.user_picture);

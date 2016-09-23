@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Mentions Sample</string>
+    <string name="app_name">Mentions</string>
     <string name="send_button_label">SEND</string>
     <string name="try_at_mentions">Try @ mentions</string>
     <string name="no_matches_found">No matches found</string>
     <string name="no_mentions_added">Type some text with mentions below.</string>
-    <string name="clear">CLEAR</string>
 </resources>

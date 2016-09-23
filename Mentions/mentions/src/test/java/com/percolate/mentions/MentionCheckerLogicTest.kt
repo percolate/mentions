@@ -14,7 +14,7 @@ import org.robolectric.annotation.Config
  */
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class, sdk = intArrayOf(23))
-class MentionCheckerUITest {
+class MentionCheckerLogicTest {
 
     /**
      * [EditText]

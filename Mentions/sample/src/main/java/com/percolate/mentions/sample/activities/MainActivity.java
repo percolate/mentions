@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements QueryListener, Su
     /**
      * Mention object provided by library to configure at mentions.
      */
-    public Mentions mentions;
+    private Mentions mentions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
