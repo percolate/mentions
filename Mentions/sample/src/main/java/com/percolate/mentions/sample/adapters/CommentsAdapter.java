@@ -38,7 +38,7 @@ public class CommentsAdapter extends RecyclerArrayAdapter<Comment, CommentsAdapt
 
     public CommentsAdapter(final Context context) {
         this.context = context;
-        this.orange = ContextCompat.getColor(context, R.color.orange);
+        this.orange = ContextCompat.getColor(context, R.color.mentions_default_color);
     }
 
     /**

@@ -41,30 +41,30 @@ class MentionInsertionLogicTest {
 
     /**
      * "Hello @Br" --> "Hello Brent Watson"
-
-     * Perfrom an @ mention by typing @Br and test whether Brent Watson was added to the
+     *
+     * Perform an @ mention by typing @Br and test whether Brent Watson was added to the
      * [EditText] view and whether the mention was highlighted.
      */
     @Test
     fun testMentionInsertion() {
-        // perform @ mention
+        // perform @ mention.
         MentionTestUtils.setTextAndSelection(editText, "Hello @Br")
 
-        // create mock mention
+        // create mock mention.
         val mention = createMockMention("Hello ".length, "Brent Watson")
 
-        // insert mention into {@link EditText} view
+        // insert mention into EditText view.
         mentionInsertionLogic.insertMention(mention)
 
-        // Test {@link EditText} has full mention name "Brent Watson"
+        // Test EditText has full mention name "Brent Watson".
         assertEquals(editText.text.toString(), "Hello Brent Watson ")
 
-        // Test mention is tracked internally {@link MentionInertionUtils}
+        // Test mention is tracked internally MentionInsertionLogic.
         assertNotNull(mentionInsertionLogic.mentions)
         assertTrue("The mention \"Brent Watson\" was not inserted.",
                 mentionInsertionLogic.mentions.size == 1)
 
-        // Test "Brent Watson" was highlighted
+        // Test "Brent Watson" was highlighted.
         val highlightSpans = editText.editableText.getSpans("Hello ".length,
                 editText.text.length, ForegroundColorSpan::class.java)
         assertTrue("Did not highlight mention", highlightSpans.size == 1)
@@ -87,24 +87,24 @@ class MentionInsertionLogicTest {
     }
 
     /**
-     * An [EditText] view may have text pre-populated with mentions. The mehtod will
+     * An [EditText] view may have text pre-populated with mentions. The method will
      * tests whether the pre-existing mentions are highlighted.
      */
     @Test
     fun testPrepopulateMentions() {
-        // insert text with mentions "Brent Watson" and "Doug Tabuchi" into {@link EditText}.
+        // insert text with mentions "Brent Watson" and "Doug Tabuchi" into EditText.
         MentionTestUtils.setTextAndSelection(editText, "Hello Brent Watson and Doug Tabuchi")
 
-        // create an array of mock mentions
+        // create an array of mock mentions.
         val mentions = ArrayList<Mentionable>()
         mentions.add(createMockMention("Hello ".length, "Brent Watson"))
         mentions.add(createMockMention("Hello Brent Watson and ".length,
                 "Doug Tabuchi"))
 
-        // add array of pre-existing mentions
+        // add array of pre-existing mentions.
         mentionInsertionLogic.addMentions(mentions)
 
-        // Test whether all the mentions are tracked internally by {@link MentionInsertionLogic}.
+        // Test whether all the mentions are tracked internally by MentionInsertionLogic.
         assertNotNull(mentionInsertionLogic.mentions)
         assertTrue("Did not add mentions.", mentionInsertionLogic.mentions.size == 2)
 

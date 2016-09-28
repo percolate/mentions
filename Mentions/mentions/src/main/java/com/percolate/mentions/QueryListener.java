@@ -11,6 +11,6 @@ public interface QueryListener {
      *
      * @param query String  A valid search text entered by the user after the '@' symbol.
      */
-    void onQueryReceived(String query);
+    void onQueryReceived(final String query);
 
 }

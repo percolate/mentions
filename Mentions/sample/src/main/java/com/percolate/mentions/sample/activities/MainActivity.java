@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements QueryListener, Su
      * view.
      */
     private void setupSendButtonTextWatcher() {
-        final int orange = ContextCompat.getColor(MainActivity.this, R.color.orange);
+        final int orange = ContextCompat.getColor(MainActivity.this, R.color.mentions_default_color);
         final int orangeFaded = ContextCompat.getColor(MainActivity.this, R.color.orange_faded);
 
         commentField.addTextChangedListener(new TextWatcher() {

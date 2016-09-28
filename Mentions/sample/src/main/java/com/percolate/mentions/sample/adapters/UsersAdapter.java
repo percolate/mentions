@@ -43,7 +43,7 @@ public class UsersAdapter extends RecyclerArrayAdapter<User, UsersAdapter.UserVi
 
     public UsersAdapter(final Context context) {
         this.context = context;
-        final int orange = ContextCompat.getColor(context, R.color.orange);
+        final int orange = ContextCompat.getColor(context, R.color.mentions_default_color);
         this.colorSpan = new ForegroundColorSpan(orange);
     }
 

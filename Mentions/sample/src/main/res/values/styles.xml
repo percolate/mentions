@@ -4,8 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/grey_light</item>
-        <item name="colorPrimaryDark">@color/orange</item>
-        <item name="colorAccent">@color/orange</item>
+        <item name="colorPrimaryDark">@color/mentions_default_color</item>
+        <item name="colorAccent">@color/mentions_default_color</item>
     </style>
 
 </resources>

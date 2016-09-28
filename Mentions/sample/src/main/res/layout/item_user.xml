@@ -14,7 +14,7 @@
         android:layout_height="25dp"
         app:riv_mutate_background="true"
         app:riv_oval="true"
-        tools:src="@color/orange"/>
+        tools:src="@color/mentions_default_color"/>
 
     <TextView
         android:id="@+id/user_full_name"

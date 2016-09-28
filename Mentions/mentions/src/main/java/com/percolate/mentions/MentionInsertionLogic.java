@@ -19,6 +19,9 @@ import java.util.List;
  */
 class MentionInsertionLogic {
 
+    /**
+     * The {@link EditText} we are inserting and highlighting mentions into.
+     */
     private final EditText editText;
 
     /**
@@ -32,10 +35,10 @@ class MentionInsertionLogic {
     @SuppressWarnings("WeakerAccess")
     protected int textHighlightColor;
 
-    MentionInsertionLogic(EditText editText) {
+    MentionInsertionLogic(final EditText editText) {
         this.editText = editText;
         this.mentions = new ArrayList<>();
-        this.textHighlightColor = R.color.orange;
+        this.textHighlightColor = R.color.mentions_default_color;
     }
 
     /**
@@ -110,7 +113,7 @@ class MentionInsertionLogic {
      * @param mentionable   Mentionable     The {@link Mentionable} being inserted into the
      *                                      {@link EditText}.
      */
-    private void checkMentionable(Mentionable mentionable) {
+    private void checkMentionable(final Mentionable mentionable) {
         if (mentionable == null) {
             throw new IllegalArgumentException("A null mentionable cannot be inserted into the " +
                     "EditText view");
@@ -145,8 +148,8 @@ class MentionInsertionLogic {
      *                                      <code>charSequence</code>.
      * @param after         int             The length of the new text entered by the user.
      */
-    void checkIfProgrammaticallyClearedEditText(CharSequence charSequence, int start, int
-            count, int after) {
+    void checkIfProgrammaticallyClearedEditText(final CharSequence charSequence, final int start,
+            final int count, final int after) {
         if (StringUtils.isNotBlank(charSequence) && start == 0 && count == charSequence.length()
                 && after == 0) {
             mentions.clear();
@@ -190,7 +193,7 @@ class MentionInsertionLogic {
      * Highlight all the {@link Mentionable}s in the {@link EditText}. A {@link ForegroundColorSpan}
      * is set at the starting and ending locations of the {@link Mentionable}s.
      */
-    protected void highlightMentionsText() {
+    private void highlightMentionsText() {
         // Clear current highlighting (note: just using clearSpans(); makes EditText fields act
         // strange).
         final ForegroundColorSpan[] spans = editText.getEditableText().getSpans(0,
@@ -235,12 +238,12 @@ class MentionInsertionLogic {
      * @return true or false
      */
     private boolean textHasMentions(final List<? extends Mentionable> mentions) {
-        if (editText != null && mentions != null && mentions.size() > 0) {
+        if (editText != null && mentions != null && !mentions.isEmpty()) {
             for (Mentionable mention : mentions) {
-                int mentionStart = mention.getMentionOffset();
-                int mentionEnd = mention.getMentionLength();
+                final int mentionStart = mention.getMentionOffset();
+                final int mentionEnd = mention.getMentionLength();
                 if (mentionEnd <= editText.getText().length()) {
-                    String displayText = StringUtils.substring(editText.getText().toString(),
+                    final String displayText = StringUtils.substring(editText.getText().toString(),
                             mentionStart, mentionStart + mentionEnd);
                     if (StringUtils.isBlank(displayText) || !StringUtils.equals(displayText,
                             mention.getMentionName())) {
