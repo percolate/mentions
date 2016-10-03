@@ -3,7 +3,7 @@
 [![Circle CI](https://circleci.com/gh/percolate/mentions.svg?style=svg&circle-token=82fa2c37e303a6d5c44baa2e64199d6b06141aaf)](https://circleci.com/gh/percolate/mentions)
 [![codecov.io](http://codecov.io/github/percolate/mentions/coverage.svg?branch=master&token=U8DlJgcAzs)](http://codecov.io/github/percolate/mentions?branch=master)
 
-Use the simple & powerful API to easily setup @ mentions in your EditText.
+This library provides a simple and customizable away to setup @ mentions on any EditText. Here's all it takes to get started.
 
 ## Usage Examples
 
@@ -14,19 +14,19 @@ Here is an example:
 EditText commentField = findViewById(activity, R.id.my_edit_text);
 
 Mentions mentions = new Mentions.Builder(activity, commentField)
-                    .highlightColor(R.color.blue)
-                    .maxCharacters(5)
-                    .queryListener(new QueryListener() {
-                        void onQueryReceived(final String query) {
-                            // Get and display results for query.
-                        }
-                    })
-                    .suggestionsListener(new SuggestionsListener() {
-                        void displaySuggestions(final boolean display) {
-                          // Hint that can be used to show or hide your list of @ mentions".
-                        }
-                    })
-                    .build();
+    .highlightColor(R.color.blue)
+    .maxCharacters(5)
+    .queryListener(new QueryListener() {
+        void onQueryReceived(final String query) {
+           // Get and display results for query.
+        }
+    })
+    .suggestionsListener(new SuggestionsListener() {
+        void displaySuggestions(final boolean display) {
+          // Hint that can be used to show or hide your list of @ mentions".
+        }
+    })
+    .build();
 ```
 
 The library allows you to display suggestions as you see fit. Here is an example in the sample app [Display Suggestions](https://github.com/percolate/mentions/blob/master/Mentions/sample/src/main/java/com/percolate/mentions/sample/activities/MainActivity.java#L95).
@@ -36,13 +36,13 @@ final Mention mention = new Mention();
 mention.setMentionName(user.getFullName());
 mentions.insertMention(mention);
 ```
-Inserting the mention will highlight it in the `EditText` view and the library will keep track of its' offset. As the user types more text in the view, the library will update the offset and maintain the highlighting for you.
+Inserting the mention will highlight it in the `EditText` view and the library will keep track of its offset. As the user types more text in the view, the library will update the offset and maintain the highlighting for you.
 
 If you need to get the mentions currently shown in your `EditText` view (to send to your API or do further processing):
 ```java
 final List<Mentionable> mentions = mentions.getInsertedMentions();
 for (Mentionable mention : mentions) {
-    println("Offset " + mention.getMentionOffset());
+    println("Position of 1st Character in EditText " + mention.getMentionOffset());
     println("Text " + mention.getMentionName())
     println("Length " + mention.getMentionLength());
 }
