@@ -1,24 +1,72 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'jacoco'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        debug {
+            testCoverageEnabled false
         }
+    }
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+jacoco {
+    version = '0.7.6.201602180812'
+}
+
+task coverage(type:JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+    description = 'Create code coverage report for library.'
+
+    classDirectories = fileTree(
+            dir: "$buildDir/intermediates/classes/debug",
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*',
+                       'com/percolate/mentions/CharSequenceUtils.class',
+                       'com/percolate/mentions/StringUtils.class']
+    )
+
+    sourceDirectories = files("src/main/java")
+    executionData = files("build/jacoco/testDebugUnitTest.exec")
+
+    reports {
+        //noinspection GroovyAssignabilityCheck
+        xml.enabled = true
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.robolectric:robolectric:3.1.2"
+    testCompile 'org.mockito:mockito-core:2.1.0-RC.1'
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    //Prevents class not found exception https://github.com/robolectric/robolectric/issues/1932
+    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
+}
+repositories {
+    mavenCentral()
 }

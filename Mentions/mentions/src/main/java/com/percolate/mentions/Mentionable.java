@@ -18,7 +18,7 @@ public interface Mentionable {
      *
      * @param offset    int     The starting locating of the mention in the {@link EditText}.
      */
-    void setMentionOffset(int offset);
+    void setMentionOffset(final int offset);
 
     /**
      * Get length of mention.
@@ -30,7 +30,7 @@ public interface Mentionable {
      *
      * @param length    int     The length of the mention in the {@link EditText}.
      */
-    void setMentionLength(int length);
+    void setMentionLength(final int length);
 
     /**
      * Get mentions' display name.
@@ -40,7 +40,6 @@ public interface Mentionable {
     /**
      * Set mentions' display name.
      */
-    void setMentionName(String mentionName);
-
+    void setMentionName(final String mentionName);
 
 }

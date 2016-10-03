@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="orange">#f16421</color>
+    <color name="mentions_default_color">#f16421</color>
 </resources>

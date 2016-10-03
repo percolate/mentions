@@ -11,5 +11,5 @@ public interface SuggestionsListener {
      * @param display   true if you should display a suggestions drop down or false if it should be
      *                  hidden.
      */
-    void displaySuggestions(boolean display);
+    void displaySuggestions(final boolean display);
 }

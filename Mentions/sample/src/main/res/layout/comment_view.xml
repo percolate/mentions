@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:layout_alignParentBottom="true"
     android:orientation="vertical">
 
@@ -11,9 +12,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@color/orange" />
+        android:background="@color/mentions_default_color" />
 
-    <include layout="@layout/mentions_list_view" />
+    <include layout="@layout/users_list" />
 
     <!-- Comment Container -->
 
@@ -30,9 +31,9 @@
             android:id="@+id/comment_field"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1.0"
-            android:background="@color/transparent"
             android:paddingBottom="15dp"
             android:maxLines="4"
             android:lineSpacingMultiplier="1.2"
@@ -46,7 +47,7 @@
             android:id="@+id/divider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/orange" />
+            android:background="@color/mentions_default_color" />
 
         <!-- Send Comment Button -->
 
@@ -57,7 +58,7 @@
             android:layout_gravity="center_vertical"
             android:paddingLeft="14dp"
             android:paddingRight="14dp"
-            android:background="@color/transparent"
+            android:background="@android:color/transparent"
             android:textSize="14sp"
             android:text="@string/send_button_label"
             android:textColor="@color/orange_faded" />
