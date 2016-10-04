@@ -2,6 +2,7 @@
 
 [![Circle CI](https://circleci.com/gh/percolate/mentions.svg?style=svg&circle-token=82fa2c37e303a6d5c44baa2e64199d6b06141aaf)](https://circleci.com/gh/percolate/mentions)
 [![codecov.io](http://codecov.io/github/percolate/mentions/coverage.svg?branch=master&token=U8DlJgcAzs)](http://codecov.io/github/percolate/mentions?branch=master)
+[![](https://jitpack.io/v/percolate/mentions.svg)](https://jitpack.io/#percolate/mentions)
 
 This library provides a simple and customizable away to setup @ mentions on any EditText. Here's all it takes to get started.
 
@@ -74,6 +75,13 @@ It will inform you on whether to show or hide a suggestions drop down.
 - The QueryListener interface has the method onQueryReceived(final String query). The library
 will provide you with a valid query that you could use to filter and search for mentions. For example, if the user
 types @Tes, the callback will receive "Tes" as the query.
+
+# Adding to your application
+Simply add Mentions as a gradle dependency.  Distribution is done through jitpack.io.
+
+See https://jitpack.io/com/github/percolate/mentions/ for instructions
+
+[![](https://jitpack.io/v/percolate/mentions.svg)](https://jitpack.io/#percolate/mentions)
 
 # Running Tests
 The library contains unit tests written in [Kotlin](https://kotlinlang.org/) with [Mockito](http://mockito.org/) and

@@ -1,6 +1,10 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'jacoco'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group 'com.percolate.mentions'
+version '1.0-SNAPSHOT'
 
 android {
     compileSdkVersion 24
@@ -9,8 +13,15 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 10
+        versionName "0.1.0"
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
     }
     buildTypes {
         debug {
@@ -27,6 +38,10 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+}
+
+repositories {
+    mavenCentral()
 }
 
 jacoco {
@@ -66,7 +81,4 @@ dependencies {
 
     //Prevents class not found exception https://github.com/robolectric/robolectric/issues/1932
     testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
-}
-repositories {
-    mavenCentral()
 }
