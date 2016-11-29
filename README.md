@@ -3,6 +3,7 @@
 [![Circle CI](https://circleci.com/gh/percolate/mentions.svg?style=svg&circle-token=82fa2c37e303a6d5c44baa2e64199d6b06141aaf)](https://circleci.com/gh/percolate/mentions)
 [![codecov.io](http://codecov.io/github/percolate/mentions/coverage.svg?branch=master&token=U8DlJgcAzs)](http://codecov.io/github/percolate/mentions?branch=master)
 [![](https://jitpack.io/v/percolate/mentions.svg)](https://jitpack.io/#percolate/mentions)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/26fc38f55811459aa2b4c3b4cfbe080d)](https://www.codacy.com/app/mohit-sarveiya/mentions?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=percolate/mentions&amp;utm_campaign=Badge_Grade)
 
 This library provides a simple and customizable away to setup @ mentions on any EditText. Here's all it takes to get started.
 
