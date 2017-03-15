@@ -136,7 +136,7 @@ public class Mentions {
         }
 
         /**
-          * Set a listener to notify you whether you should hide or display a drop down with
+         * Set a listener to notify you whether you should hide or display a drop down with
          * {@link Mentionable}s.
          *
          * @param suggestionsListener   SuggestionsListener     The listener for display
@@ -186,7 +186,10 @@ public class Mentions {
             @Override
             public void onClick(View view) {
                 if (mentionCheckerLogic.currentWordStartsWithAtSign()) {
-                    mentionCheckerLogic.doMentionCheck();
+                    String query = mentionCheckerLogic.doMentionCheck();
+                    queryReceived(query);
+                } else {
+                    suggestionsListener.displaySuggestions(false);
                 }
             }
         });
