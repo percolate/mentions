@@ -44,7 +44,7 @@ class MentionCheckerLogic {
      * @return String   A valid query that satisfies the three rules above.
      */
     String doMentionCheck() {
-        String queryToken = "";
+        String queryToken = null;
 
         // perform a search if the {@link EditText} has an '@' symbol.
         if (StringUtils.contains(editText.getText(), "@")) {
@@ -101,7 +101,7 @@ class MentionCheckerLogic {
      * @return true or false
      */
     private boolean searchIsWithinMaxChars(final String providedSearchText, final int maxCharacters) {
-        return (providedSearchText.length() >= 1 && providedSearchText.length() <= maxCharacters);
+        return (providedSearchText.length() >= 0 && providedSearchText.length() <= maxCharacters);
     }
 
     /**
@@ -111,7 +111,7 @@ class MentionCheckerLogic {
      * @return true or false
      */
     private boolean searchBeginsWithAlphaNumericChar(final String providedSearchText) {
-        return Character.isLetterOrDigit(providedSearchText.charAt(0));
+        return providedSearchText.length() == 0 || Character.isLetterOrDigit(providedSearchText.charAt(0));
     }
 
     /**

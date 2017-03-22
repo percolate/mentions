@@ -48,6 +48,12 @@ public class Mentions {
     protected final MentionInsertionLogic mentionInsertionLogic;
 
     /**
+     * If true, suggestion will be displayed immediately when user insert @. Otherwise user has
+     * to key in at least @ + one alphanumeric character.
+     * Default value is false
+     */
+    protected boolean allowEmptyQuery;
+    /**
      * Pass in your {@link EditText} to give it the ability to @ mention.
 
      * @param context   Context     Although not used in the library, it passed for future use.
@@ -148,6 +154,18 @@ public class Mentions {
         }
 
         /**
+         * Set true if you want the suggestion immediately after user enter @
+         *
+         * @param allowEmptyQuery      Boolean       true if you allow empty query
+         *
+         */
+        public Builder allowEmptyQuery(final boolean allowEmptyQuery) {
+            mentionsLib.allowEmptyQuery = allowEmptyQuery;
+            return this;
+        }
+
+
+        /**
          * Builds and returns a {@link Mentions} object.
          */
         public Mentions build() {
@@ -239,11 +257,15 @@ public class Mentions {
      * @param query     String      A valid query.
      */
     public void queryReceived(final String query) {
-        if (queryListener != null && StringUtils.isNotBlank(query)) {
-            queryListener.onQueryReceived(query);
-        } else {
             suggestionsListener.displaySuggestions(false);
         }
+        final boolean show = allowEmptyQuery || StringUtils.isNotBlank(query);
+
+        if (show && queryListener != null) {
+            queryListener.onQueryReceived(query);
     }
 
+        if(suggestionsListener != null) {
+            suggestionsListener.displaySuggestions(show);
+        }
 }
