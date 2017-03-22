@@ -53,6 +53,13 @@ public class Mentions {
      * Default value is false
      */
     protected boolean allowEmptyQuery;
+
+    /**
+     * If true, The suggestion will match all the words after @ sign.
+     * Otherwise the first word with match and adding a space will close the suggestion
+     */
+    protected boolean allowSpaceInQuery;
+
     /**
      * Pass in your {@link EditText} to give it the ability to @ mention.
 
@@ -94,6 +101,7 @@ public class Mentions {
                 throw new IllegalArgumentException("EditText must not be null.");
             }
             this.mentionsLib = new Mentions(context, editText);
+            this.mentionsLib.allowSpaceInQuery = true;
         }
 
         /**
@@ -161,6 +169,17 @@ public class Mentions {
          */
         public Builder allowEmptyQuery(final boolean allowEmptyQuery) {
             mentionsLib.allowEmptyQuery = allowEmptyQuery;
+            return this;
+        }
+
+        /**
+         * Set true If want to allow space to be part of the query
+         *
+         * @param allowSpaceInQuery      Boolean       true if you allow space in query
+         *
+         */
+        public Builder allowSpaceInQuery(final boolean allowSpaceInQuery) {
+            mentionsLib.allowSpaceInQuery = allowSpaceInQuery;
             return this;
         }
 
@@ -251,21 +270,28 @@ public class Mentions {
     }
 
     /**
-     * If the user typed a query that was valid then return it. Otherwise, notify you to close
+     * If the user typed a query that was valid then return it.
+     * Notify you to open or close base on the query and if you allow empty query
      * a suggestions list.
      *
      * @param query     String      A valid query.
      */
     public void queryReceived(final String query) {
-            suggestionsListener.displaySuggestions(false);
+        if(query == null || (!allowSpaceInQuery && StringUtils.contains(query, " "))) {
+            if(suggestionsListener != null) {
+                suggestionsListener.displaySuggestions(false);
+            }
+            return;
         }
+
         final boolean show = allowEmptyQuery || StringUtils.isNotBlank(query);
 
         if (show && queryListener != null) {
             queryListener.onQueryReceived(query);
-    }
+        }
 
         if(suggestionsListener != null) {
             suggestionsListener.displaySuggestions(show);
         }
+    }
 }
