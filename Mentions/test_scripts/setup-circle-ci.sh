@@ -27,11 +27,11 @@ else
   echo "Skipping Android SDK updates.  Clear cache to make them happen again."
 fi
 
-# Update Gradle to version 2.14.1
+# Update Gradle to version 3.3
 if [ ! -e $GRADLE_UPDATE_INSTALLED_TOUCH_FILE ]; then
-  wget https://services.gradle.org/distributions/gradle-2.14.1-all.zip
-  unzip -q gradle-2.14.1-all.zip
-  mv gradle-2.14.1 $CACHE_DIR
+  wget https://services.gradle.org/distributions/gradle-3.3-all.zip
+  unzip -q gradle-3.3-all.zip
+  mv gradle-3.3 $CACHE_DIR
   touch $GRADLE_UPDATE_INSTALLED_TOUCH_FILE
 else
   echo "Skipping Gradle update.  Clear cache to make it happen again."
