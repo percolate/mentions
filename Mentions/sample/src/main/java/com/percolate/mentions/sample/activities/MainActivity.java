@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements QueryListener, Su
         mentions = new Mentions.Builder(this, commentField)
                 .suggestionsListener(this)
                 .queryListener(this)
+                .allowSpaceInQuery(false)
                 .build();
         mentionsLoaderUtils = new MentionsLoaderUtils(this);
     }

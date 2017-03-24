@@ -82,18 +82,22 @@ class MentionInsertionLogic {
      *
      * @param mention Mentionable     A mention to display in {@link EditText}.
      */
-     void insertMention(final Mentionable mention) {
+    void insertMention(final Mentionable mention) {
         checkMentionable(mention);
         mention.setMentionLength(mention.getMentionName().length());
 
         final int cursorPosition = editText.getSelectionEnd();
         final String text = editText.getText().toString();
-        final String toReplace = text.substring(0, cursorPosition);
-        final int start = toReplace.lastIndexOf("@");
+        final String textBefore = text.substring(0, cursorPosition);
+        final int start = textBefore.lastIndexOf("@");
+        final String allTextAfterCursor = text.substring(cursorPosition, text.length());
+
+        final String remainingWord = StringUtils.substringBefore(allTextAfterCursor, " ");
+        final int deleteUntil = cursorPosition + remainingWord.length();
 
         if (start != -1) {
             final int newCursorPosition = start + mention.getMentionName().length() + 1;
-            editText.getText().delete(start, cursorPosition);
+            editText.getText().delete(start, deleteUntil);
             editText.getText().insert(start, mention.getMentionName() + " ");
 
             // Fix bug on LG G3 phone, where EditText messes up when using insert() method.
@@ -149,7 +153,7 @@ class MentionInsertionLogic {
      * @param after         int             The length of the new text entered by the user.
      */
     void checkIfProgrammaticallyClearedEditText(final CharSequence charSequence, final int start,
-            final int count, final int after) {
+                                                final int count, final int after) {
         if (StringUtils.isNotBlank(charSequence) && start == 0 && count == charSequence.length()
                 && after == 0) {
             mentions.clear();
@@ -166,7 +170,7 @@ class MentionInsertionLogic {
      * @param before int     Length of old text.
      * @param count  int     The number of characters in the new text.
      */
-     void updateInternalMentionsArray(final int start, final int before, final int count) {
+    void updateInternalMentionsArray(final int start, final int before, final int count) {
         if (!mentions.isEmpty()) {
             if (before != count) { // Text not changed if they ==.
                 for (Iterator<Mentionable> iterator = mentions.iterator(); iterator.hasNext(); ) {
@@ -223,7 +227,7 @@ class MentionInsertionLogic {
                     }
                 } catch (Exception ex) {
                     Log.e("Mentions", "Mention removed due to exception. + [" +
-                                                                mention.getMentionName() + "]", ex);
+                            mention.getMentionName() + "]", ex);
                     iterator.remove();
                 }
             }

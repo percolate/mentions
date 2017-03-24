@@ -1,5 +1,6 @@
 package com.percolate.mentions;
 
+import android.text.Editable;
 import android.widget.EditText;
 
 /**
@@ -28,7 +29,7 @@ class MentionCheckerLogic {
     void setMaxCharacters(final int maxCharacters) {
         if (maxCharacters <= 0) {
             throw new IllegalArgumentException("Maximum number of characters must be greater " +
-                                               "than 0.");
+                    "than 0.");
         }
         this.maxCharacters = maxCharacters;
     }
@@ -44,13 +45,23 @@ class MentionCheckerLogic {
      * @return String   A valid query that satisfies the three rules above.
      */
     String doMentionCheck() {
-        String queryToken = "";
+        final String intput = editText.getText().toString();
+
+        String queryToken = null;
 
         // perform a search if the {@link EditText} has an '@' symbol.
-        if (StringUtils.contains(editText.getText(), "@")) {
+        if (StringUtils.contains(intput, "@")) {
             final int cursorPosition = editText.getSelectionStart();
-            final String allTextBeforeCursor = editText.getText().toString().substring(0, cursorPosition);
-            final String providedSearchText = StringUtils.substringAfterLast(allTextBeforeCursor, "@");
+            final String allTextBeforeCursor = intput.substring(0, cursorPosition);
+            final String allTextAfterCursor = intput.substring(cursorPosition, intput.length());
+
+            // If the user tap in the middle of a word, the queryToken will include the
+            // full word. So we get the rest of the word until the end of the string
+            // or until we found a space
+            final String remainingWord = StringUtils.substringBefore(allTextAfterCursor, " ");
+            final String AllTextBeforeWithFullWord = allTextBeforeCursor + remainingWord;
+
+            final String providedSearchText = StringUtils.substringAfterLast(AllTextBeforeWithFullWord, "@");
 
             // check search text is within <code>maxCharacters</code> and begins with a
             // alpha numeric char.
@@ -101,7 +112,7 @@ class MentionCheckerLogic {
      * @return true or false
      */
     private boolean searchIsWithinMaxChars(final String providedSearchText, final int maxCharacters) {
-        return (providedSearchText.length() >= 1 && providedSearchText.length() <= maxCharacters);
+        return (providedSearchText.length() >= 0 && providedSearchText.length() <= maxCharacters);
     }
 
     /**
@@ -111,7 +122,7 @@ class MentionCheckerLogic {
      * @return true or false
      */
     private boolean searchBeginsWithAlphaNumericChar(final String providedSearchText) {
-        return Character.isLetterOrDigit(providedSearchText.charAt(0));
+        return providedSearchText.length() == 0 || Character.isLetterOrDigit(providedSearchText.charAt(0));
     }
 
     /**
@@ -128,10 +139,10 @@ class MentionCheckerLogic {
             //Multiple text is not highlighted
             if (editText.length() >= start) {
                 String text = editText.getText().toString().substring(0, start);
-                text = StringUtils.substringAfterLast(text, " ");
-                if (StringUtils.startsWith(text, "@")) {
-                    return true;
+                if(StringUtils.contains(text, " ")) {
+                    text = StringUtils.substringAfterLast(text, " ");
                 }
+                return StringUtils.startsWith(text, "@");
             }
         }
         return false;

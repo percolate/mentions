@@ -48,6 +48,19 @@ public class Mentions {
     protected final MentionInsertionLogic mentionInsertionLogic;
 
     /**
+     * If true, suggestion will be displayed immediately when user insert @. Otherwise user has
+     * to key in at least @ + one alphanumeric character.
+     * Default value is false
+     */
+    protected boolean allowEmptyQuery;
+
+    /**
+     * If true, The suggestion will match all the words after @ sign.
+     * Otherwise the first word with match and adding a space will close the suggestion
+     */
+    protected boolean allowSpaceInQuery;
+
+    /**
      * Pass in your {@link EditText} to give it the ability to @ mention.
 
      * @param context   Context     Although not used in the library, it passed for future use.
@@ -88,6 +101,7 @@ public class Mentions {
                 throw new IllegalArgumentException("EditText must not be null.");
             }
             this.mentionsLib = new Mentions(context, editText);
+            this.mentionsLib.allowSpaceInQuery = true;
         }
 
         /**
@@ -146,6 +160,29 @@ public class Mentions {
             mentionsLib.suggestionsListener = suggestionsListener;
             return this;
         }
+
+        /**
+         * Set true if you want the suggestion immediately after user enter @
+         *
+         * @param allowEmptyQuery      Boolean       true if you allow empty query
+         *
+         */
+        public Builder allowEmptyQuery(final boolean allowEmptyQuery) {
+            mentionsLib.allowEmptyQuery = allowEmptyQuery;
+            return this;
+        }
+
+        /**
+         * Set true If want to allow space to be part of the query
+         *
+         * @param allowSpaceInQuery      Boolean       true if you allow space in query
+         *
+         */
+        public Builder allowSpaceInQuery(final boolean allowSpaceInQuery) {
+            mentionsLib.allowSpaceInQuery = allowSpaceInQuery;
+            return this;
+        }
+
 
         /**
          * Builds and returns a {@link Mentions} object.
@@ -233,17 +270,28 @@ public class Mentions {
     }
 
     /**
-     * If the user typed a query that was valid then return it. Otherwise, notify you to close
+     * If the user typed a query that was valid then return it.
+     * Notify you to open or close base on the query and if you allow empty query
      * a suggestions list.
      *
      * @param query     String      A valid query.
      */
     public void queryReceived(final String query) {
-        if (queryListener != null && StringUtils.isNotBlank(query)) {
+        if(query == null || (!allowSpaceInQuery && StringUtils.contains(query, " "))) {
+            if(suggestionsListener != null) {
+                suggestionsListener.displaySuggestions(false);
+            }
+            return;
+        }
+
+        final boolean show = allowEmptyQuery || StringUtils.isNotBlank(query);
+
+        if (show && queryListener != null) {
             queryListener.onQueryReceived(query);
-        } else {
-            suggestionsListener.displaySuggestions(false);
+        }
+
+        if(suggestionsListener != null) {
+            suggestionsListener.displaySuggestions(show);
         }
     }
-
 }
