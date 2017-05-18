@@ -2,7 +2,7 @@ machine:
   environment:
     CACHE_DIR: /home/ubuntu/cache
     ANDROID_HOME: /home/ubuntu/cache/android-sdk-linux
-    GRADLE_HOME: /home/ubuntu/cache/gradle-3.3
+    GRADLE_HOME: /home/ubuntu/cache/gradle-3.5
     GRADLE_OPTS: -Xmx512m -XX:MaxPermSize=512m
   java:
     version: oraclejdk8
@@ -18,7 +18,7 @@ dependencies:
   cache_directories:
     - /home/ubuntu/cache
     - /home/ubuntu/cache/android-sdk-linux
-    - /home/ubuntu/cache/gradle-3.3
+    - /home/ubuntu/cache/gradle-3.5
   override:
     - ./test_scripts/setup-circle-ci.sh
 

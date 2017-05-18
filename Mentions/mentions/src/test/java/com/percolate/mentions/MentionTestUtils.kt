@@ -31,7 +31,7 @@ internal object MentionTestUtils {
      */
     fun setTextAndSelection(editText: EditText, text: String?) {
         editText.setText(text)
-        editText.setSelection(if (text != null) text.length else 0)
+        editText.setSelection(text?.length ?: 0)
     }
 
     /**
