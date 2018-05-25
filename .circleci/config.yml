@@ -1,0 +1,29 @@
+version: 2
+
+workflows:
+  version: 2
+  phaser:
+    jobs:
+      - mdl
+      - gradle
+
+jobs:
+
+  mdl:
+    docker:
+      - image: rsrchboy/mdl
+    steps:
+      - checkout
+      - run: mdl .
+
+  gradle:
+    docker:
+      - image: circleci/android:api-25-alpha
+    steps:
+      - checkout
+      # - run: Mentions/test_scripts/setup-circle-ci.sh
+      # - run: Mentions/test_scripts/run_tests.sh
+      - run:
+          command: ./gradlew coverage
+          working_directory: Mentions
+      - run: bash <(curl -s https://codecov.io/bash)
